@@ -1,0 +1,1456 @@
+<!DOCTYPE html>
+<html lang="ko" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>9sEngineer | 동결건조 설비기술 & 공학이론 아카이브</title>
+  <meta name="description" content="동결건조 엔지니어가 관리하는 설비 기계계통, 열역학 이론, 진공/냉동 시스템, CIP/SIP 멸균 밸리데이션 및 트러블슈팅 종합 블로그">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%20role%3D%22img%22%20aria-label%3D%229sEngineer%20%EB%A1%9C%EA%B3%A0%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22engineer-gradient%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20stop-color%3D%22%230ea5e9%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%234f46e5%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2212%22%20fill%3D%22url(%23engineer-gradient)%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2247%22%20fill%3D%22%23ffffff%22%20font-family%3D%22Georgia%2Cserif%22%20font-size%3D%2244%22%20font-weight%3D%22bold%22%20text-anchor%3D%22middle%22%3E9%3C%2Ftext%3E%3Ccircle%20cx%3D%2251%22%20cy%3D%2249%22%20r%3D%224%22%20fill%3D%22%2322d3ee%22%2F%3E%3C%2Fsvg%3E">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: "#f0f9ff",
+              100: "#e0f2fe",
+              200: "#bae6fd",
+              300: "#7dd3fc",
+              400: "#38bdf8",
+              500: "#0ea5e9",
+              600: "#0284c7",
+              700: "#0369a1",
+              800: "#075985",
+              900: "#0c4a6e",
+              950: "#082f49",
+            }
+          },
+          fontFamily: {
+            sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'Roboto', 'sans-serif'],
+            mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- KaTeX Math Rendering CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #475569; }
+    
+    .katex-display { overflow-x: auto; overflow-y: hidden; padding: 0.5rem 0; }
+  </style>
+<style id="education-only-styles">/* 새 교육 화면만 적용. 원본 스타일은 변경하지 않음. */
+.edu{--edu-text:#0f172a;--edu-muted:#475569;--edu-line:#e2e8f0;--edu-panel:#fff;--edu-soft:#f0f9ff;--edu-accent:#0284c7}.dark .edu{--edu-text:#f8fafc;--edu-muted:#cbd5e1;--edu-line:#1e293b;--edu-panel:#0f172a;--edu-soft:rgba(8,47,73,.35);--edu-accent:#38bdf8}.edu .breadcrumb{font-size:12px;color:var(--edu-muted);margin-bottom:26px}.edu .breadcrumb a{color:var(--edu-accent)}.edu .lesson-layout{display:grid;grid-template-columns:210px minmax(0,1fr);gap:30px}.edu .side{align-self:start;position:sticky;top:110px;padding:20px;background:var(--edu-panel);border:1px solid var(--edu-line);border-radius:16px}.edu .side .num{font-family:monospace;font-size:11px;color:var(--edu-accent)}.edu .side h3{font-size:17px;font-weight:700;color:var(--edu-text);margin:9px 0 17px}.edu .side a{display:block;font-size:12px;margin:13px 0;color:var(--edu-muted)}.edu .side a:hover,.edu .side .active{color:var(--edu-accent)}.edu .side hr{border-color:var(--edu-line);margin:20px 0}.edu .lesson{min-width:0;color:var(--edu-text);background:var(--edu-panel);border:1px solid var(--edu-line);border-radius:24px;padding:32px}.edu .eyebrow{font-family:monospace;font-size:11px;font-weight:600;letter-spacing:1.3px;color:var(--edu-accent)}.edu .lesson h1{font-size:32px;line-height:1.4;font-weight:800;letter-spacing:-1px;margin:12px 0 18px}.edu .lesson h2{font-size:21px;font-weight:700;margin:0 0 14px}.edu .lesson h3{font-size:17px;font-weight:700}.edu .lesson p,.edu .lesson li{font-size:14px;line-height:1.95;color:var(--edu-muted)}.edu .lesson p{margin:10px 0}.edu .lesson b{color:var(--edu-text)}.edu .lesson section{margin:30px 0;scroll-margin-top:115px}.edu .goals{background:var(--edu-soft);border:1px solid #0ea5e933;border-radius:16px;padding:20px 24px;margin:24px 0}.edu .goals strong{font-size:12px;color:var(--edu-accent)}.edu .goals ol,.edu .lesson ol,.edu .lesson ul{list-style:decimal;padding-left:20px;margin-top:10px}.edu .lesson ul{list-style:disc}.edu .example{padding:20px;background:var(--edu-soft);border:1px solid var(--edu-line);border-radius:16px}.edu .label{font-size:11px;color:var(--edu-accent);font-weight:600}.edu .small-link{font-size:12px;color:var(--edu-accent);text-decoration:underline;text-underline-offset:4px}.edu .source{font-size:11px!important;color:var(--edu-muted)}.edu .flow-panel{margin:20px 0;padding:22px;border-radius:18px;border:1px solid var(--edu-line);background:var(--edu-soft)}.edu .caption{display:flex;justify-content:space-between;font-size:11px;color:var(--edu-accent);margin-bottom:18px}.edu .route{display:flex;align-items:center;gap:8px}.edu .node{flex:1;text-align:center;padding:13px 4px;font-size:11px;font-weight:600;border:1px solid var(--edu-line);background:var(--edu-panel);border-radius:12px;color:var(--edu-text)}.edu .node svg{width:17px;height:17px;margin:0 auto 8px;color:var(--edu-accent)}.edu .node.accent{border-color:#0ea5e988;background:linear-gradient(135deg,#0ea5e91a,#6366f11a)}.edu .arrow{font-size:12px;color:var(--edu-accent)}.edu .return{font-size:10px;text-align:center;color:var(--edu-muted);padding:13px 0;border-bottom:1px dashed var(--edu-line);margin-bottom:13px}.edu .flow-note{display:grid;grid-template-columns:1fr 1fr;gap:10px}.edu .flow-note div{font-size:10px;color:var(--edu-muted);background:var(--edu-panel);padding:12px;border-radius:10px}.edu .flow-note b{display:block;color:var(--edu-accent);font-size:11px;margin-bottom:5px}.edu details{padding:16px 18px;border:1px solid var(--edu-line);border-radius:12px;margin:12px 0}.edu summary{font-size:13px;font-weight:600;cursor:pointer}.edu .btn{display:inline-flex;padding:10px 16px;border:1px solid var(--edu-line);background:var(--edu-panel);border-radius:12px;font-size:12px;color:var(--edu-accent);font-weight:600}.edu .mobile-next{padding-top:25px;margin-top:28px;border-top:1px solid var(--edu-line)}.edu .help{padding:20px;border:1px solid var(--edu-line);border-radius:16px;background:var(--edu-soft);margin-top:20px}.edu a:focus-visible,.edu summary:focus-visible{outline:2px solid #0ea5e9;outline-offset:4px}@media(max-width:900px){.edu .lesson-layout{grid-template-columns:1fr}.edu .side{position:static;display:none}.edu .lesson{padding:24px}.edu .lesson h1{font-size:28px}}@media(max-width:550px){.edu .lesson{padding:18px;border-radius:16px}.edu .lesson h1{font-size:24px}.edu .lesson h2{font-size:19px}.edu .flow-panel{padding:14px}.edu .node{font-size:10px}.edu .flow-note{grid-template-columns:1fr}.edu .route{gap:4px}}
+</style><style id="ripple-background-only-preview">/* Ripple 배경만 병합. 글자·카드·버튼·아이콘·배치 변경 없음. */
+html:not(.dark) body{background-color:#f8f8f8 !important}
+html.dark body{background-color:#141a1f !important}
+html:not(.dark) body>header{background-color:rgba(255,255,255,.9) !important}
+html.dark body>header{background-color:rgba(20,26,31,.9) !important}
+html:not(.dark) #view-home>section:first-child{background-color:#ffffff !important;background-image:none !important}
+html.dark #view-home>section:first-child{background-color:#141a1f !important;background-image:none !important}
+html:not(.dark) #edu-preview-banner{background-color:#f2faff !important}
+html.dark #edu-preview-banner{background-color:rgba(0,106,255,.07) !important}
+html:not(.dark) #view-learning>div>div.rounded-3xl{background-color:#f2faff !important;background-image:none !important}
+html.dark #view-learning>div>div.rounded-3xl{background-color:#141a1f !important;background-image:none !important}
+</style>
+<style id="dark-header-preview">/* 헤더 배경·대비만 변경. 로고·메뉴 배치·기능은 유지. */
+html:root body>header{background-color:rgba(15,23,42,.96)!important;border-bottom-color:#1e293b!important}
+html body>header .font-extrabold{color:#ffffff!important}
+html body>header a[href="#home"] p{color:#94a3b8!important}
+html body>header nav a{color:#cbd5e1!important}
+html body>header nav a:hover{color:#ffffff!important;background-color:#1e293b!important}
+html body>header button{color:#cbd5e1!important}
+html body>header button:hover{background-color:#1e293b!important}
+html body>header #theme-toggle svg{color:#fbbf24!important}
+html body>header [class~="text-[10px]"]{color:#7dd3fc!important;background-color:rgba(14,165,233,.14)!important;border-color:rgba(14,165,233,.3)!important}
+html #mobile-menu{background-color:#0f172a!important;border-top-color:#1e293b!important;color:#cbd5e1!important}
+html #mobile-menu a:hover{background-color:#1e293b!important;color:#ffffff!important}
+</style>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 min-h-screen flex flex-col font-sans transition-colors duration-200 selection:bg-sky-500 selection:text-white">
+
+  <!-- ==================== HEADER ==================== -->
+  <header class="sticky top-0 z-50 w-full backdrop-blur-md bg-white/90 dark:bg-slate-950/90 border-b border-slate-200 dark:border-slate-800 transition-colors">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        
+        <!-- Logo -->
+        <a href="#home" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-500 to-indigo-600 flex items-center justify-center text-white shadow-md shadow-sky-500/20 group-hover:scale-105 transition-transform">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" class="w-8 h-8" role="img" aria-label="9sEngineer 로고"><text x="32" y="47" fill="#ffffff" font-family="Georgia,serif" font-size="44" font-weight="bold" text-anchor="middle">9</text><circle cx="51" cy="49" r="4" fill="#22d3ee"/></svg>
+          </div>
+          <div>
+            <div class="flex items-center gap-1.5">
+              <span class="font-extrabold text-lg tracking-tight text-slate-900 dark:text-white">
+                9s<span class="text-sky-500">Engineer</span>
+              </span>
+              <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-sky-100 dark:bg-sky-950/70 text-sky-700 dark:text-sky-300 font-semibold border border-sky-200 dark:border-sky-800">
+                HTML Edition
+              </span>
+            </div>
+            <p class="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
+              동결건조 설비기술 & 열역학 공학 아카이브
+            </p>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex items-center gap-1 text-sm font-medium">
+          <a href="#home" class="nav-link px-3 py-2 rounded-lg text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors">
+            홈
+          </a>
+          <a href="#posts" class="nav-link px-3 py-2 rounded-lg text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors flex items-center gap-1.5">
+            <i data-lucide="book-open" class="w-4 h-4"></i>
+            기술 아티클
+          </a>
+          <a href="#categories" class="nav-link px-3 py-2 rounded-lg text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors flex items-center gap-1.5">
+            <i data-lucide="layers" class="w-4 h-4"></i>
+            5대 공학 파트
+          </a>
+          <a href="#tools" class="nav-link px-3 py-2 rounded-lg text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors flex items-center gap-1.5">
+            <i data-lucide="calculator" class="w-4 h-4 text-emerald-500"></i>
+            엔지니어링 계산기
+          </a>
+          <a href="#diagram" class="nav-link px-3 py-2 rounded-lg text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors flex items-center gap-1.5">
+            <i data-lucide="network" class="w-4 h-4 text-purple-500"></i>
+            설비 계통도 (P&ID)
+          </a>
+          
+        </nav>
+
+        <!-- Right: Theme Toggle & Mobile Menu -->
+        <div class="flex items-center gap-2">
+          <button id="theme-toggle" class="p-2 rounded-lg text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" title="다크/라이트 모드 전환">
+            <i data-lucide="sun" class="w-5 h-5 text-amber-400 dark:block hidden"></i>
+            <i data-lucide="moon" class="w-5 h-5 text-slate-700 dark:hidden block"></i>
+          </button>
+          
+          <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+            <i data-lucide="menu" class="w-6 h-6"></i>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Mobile Menu Drawer -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-4 py-4 space-y-2">
+      <a href="#home" class="block px-3 py-2 rounded-lg text-sm font-semibold hover:bg-slate-100 dark:hover:bg-slate-900">🏠 홈</a>
+      <a href="#posts" class="block px-3 py-2 rounded-lg text-sm font-semibold hover:bg-slate-100 dark:hover:bg-slate-900">📚 기술 아티클 전체</a>
+      <a href="#categories" class="block px-3 py-2 rounded-lg text-sm font-semibold hover:bg-slate-100 dark:hover:bg-slate-900">🗂️ 5대 공학 카테고리</a>
+      <a href="#tools" class="block px-3 py-2 rounded-lg text-sm font-semibold hover:bg-slate-100 dark:hover:bg-slate-900">⚡ 4대 엔지니어링 계산기</a>
+      <a href="#diagram" class="block px-3 py-2 rounded-lg text-sm font-semibold hover:bg-slate-100 dark:hover:bg-slate-900">🔍 대화형 설비 계통도 (P&ID)</a>
+      
+    </div>
+  </header>
+<div id="edu-preview-banner" class="border-b border-sky-500/20 bg-sky-50 dark:bg-sky-950/20"><div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex flex-wrap items-center justify-between gap-2 text-[11px]"><span class="text-slate-500 dark:text-slate-400"><span class="text-sky-600 dark:text-sky-400 font-semibold">공개 브로셔 기반 교육자료</span></span><div class="flex gap-4"><a href="#learning" class="font-semibold text-sky-600 dark:text-sky-400">학습 지도</a><a href="#lesson-conrad" class="font-semibold text-sky-600 dark:text-sky-400">첫 모듈 열기 →</a></div></div></div>
+
+  <!-- ==================== MAIN CONTENT CONTAINER ==================== -->
+  <main class="flex-grow">
+    
+    <!-- VIEW 1: HOME -->
+    <div id="view-home" class="view-panel space-y-20 pb-20">
+      
+      <!-- Hero -->
+      <section class="relative overflow-hidden pt-12 pb-16 md:pt-20 md:pb-24 border-b border-slate-200 dark:border-slate-800 bg-gradient-to-b from-slate-100/60 via-transparent to-transparent dark:from-slate-900/40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="max-w-3xl space-y-6">
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-700 dark:text-sky-300 text-xs font-semibold">
+              <i data-lucide="sparkles" class="w-3.5 h-3.5 text-sky-500 animate-pulse"></i>
+              <span>CONRAD Continuous Freeze Drying · Learning & Engineering</span>
+            </div>
+
+            <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.15]">
+              CONRAD로 이해하는 <br class="hidden sm:inline" />
+              <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-500 via-indigo-500 to-cyan-400">
+                연속 동결건조 공정
+              </span>
+            </h1>
+
+            <p class="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
+              연속 이송·열 공급·수증기 포집의 관계를 이해하고,
+              공정 변수의 변화를 해석해 관찰·기록·보고로 연결해요.
+              기존 기술 글·계산기·계통도는 참고자료로 함께 살펴볼 수 있어요.
+            </p>
+
+            <div class="flex flex-wrap items-center gap-3 pt-2">
+              <a href="#learning" class="px-6 py-3 rounded-xl bg-sky-500 hover:bg-sky-600 text-white font-semibold text-sm shadow-lg shadow-sky-500/25 flex items-center gap-2 transition-all hover:scale-105">
+                교육과정 시작하기 <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              </a>
+              <a href="#tools" class="px-6 py-3 rounded-xl bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 font-semibold text-sm border border-slate-300 dark:border-slate-700 flex items-center gap-2 transition-all">
+                <i data-lucide="calculator" class="w-4 h-4 text-emerald-500"></i> 엔지니어링 계산기
+              </a>
+              <a href="#diagram" class="px-6 py-3 rounded-xl bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 font-semibold text-sm border border-slate-300 dark:border-slate-700 flex items-center gap-2 transition-all">
+                <i data-lucide="network" class="w-4 h-4 text-purple-500"></i> 설비 계통도 (P&ID)
+              </a>
+            </div>
+          </div>
+
+          <!-- Learning Summary: 원본 4개 요약 카드 디자인 재사용 -->
+          <div class="ticker-grid mt-12 grid grid-cols-2 md:grid-cols-4 gap-4"><div class="p-4 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 shadow-sm"><div class="text-[11px] font-mono text-slate-500 dark:text-slate-400">CONTINUOUS PROCESS</div><div class="text-xl font-bold text-amber-500 mt-1">연속 이송</div><div class="text-[10px] text-slate-400 mt-0.5">트레이 · 에어록 · 건조 구역</div></div><div class="p-4 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 shadow-sm"><div class="text-[11px] font-mono text-slate-500 dark:text-slate-400">HEAT & VAPOR</div><div class="text-xl font-bold text-cyan-500 mt-1">열·수증기</div><div class="text-[10px] text-slate-400 mt-0.5">가열판 · 콘덴서 · 진공</div></div><div class="p-4 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 shadow-sm"><div class="text-[11px] font-mono text-slate-500 dark:text-slate-400">OBSERVATION</div><div class="text-xl font-bold text-emerald-500 mt-1">변수 해석</div><div class="text-[10px] text-slate-400 mt-0.5">단위 · 추세 · 비교 조건</div></div><div class="p-4 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 shadow-sm"><div class="text-[11px] font-mono text-slate-500 dark:text-slate-400">CDI SYSTEM</div><div class="text-xl font-bold text-purple-500 mt-1">연속 제빙</div><div class="text-[10px] text-slate-400 mt-0.5">콘덴서 제빙과 연속 공정</div></div></div>
+        </div>
+      </section>
+
+      <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4"><div><div class="text-xs font-mono font-semibold uppercase tracking-wider text-sky-600 dark:text-sky-400">CONRAD Learning Path</div><h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mt-1">공정 이해에서 근거 기반 보고까지</h2><p class="text-sm text-slate-500 dark:text-slate-400 mt-3">대졸 생산·운전 신규자를 위한 6단계 과정. 공학 전공은 필수로 가정하지 않아요.</p></div><a href="#learning" class="text-xs font-semibold text-sky-600 dark:text-sky-400 flex items-center gap-1">전체 학습 지도<i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></a></div><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"><a href="#lesson-conrad" class="group p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 hover:border-sky-500/50 hover:shadow-xl transition-all flex flex-col justify-between"><div><div class="flex items-center justify-between mb-4"><div class="w-11 h-11 rounded-xl bg-sky-500/10 border border-sky-500/20 text-sky-500 flex items-center justify-center group-hover:scale-110 transition-transform"><i data-lucide="network" class="w-5 h-5"></i></div><span class="text-[11px] font-mono text-slate-400">MODULE 01</span></div><h3 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-sky-500 transition-colors">공정 구조와 시스템 경계</h3><p class="text-sm text-slate-600 dark:text-slate-300 mt-3 leading-relaxed">제품·열·수증기의 흐름을 연결해 연속 운전 구조를 설명해요.</p></div><div class="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px] text-slate-400"><span>첫 모듈 · 15분 내외 제안</span><span class="font-semibold text-sky-500 flex items-center gap-1">모듈 열기<i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span></div></a><a href="#learning" class="group p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 hover:border-sky-500/50 hover:shadow-xl transition-all flex flex-col justify-between"><div><div class="flex items-center justify-between mb-4"><div class="w-11 h-11 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-500 flex items-center justify-center group-hover:scale-110 transition-transform"><i data-lucide="boxes" class="w-5 h-5"></i></div><span class="text-[11px] font-mono text-slate-400">MODULE 02</span></div><h3 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-sky-500 transition-colors">원료 특성과 전처리</h3><p class="text-sm text-slate-600 dark:text-slate-300 mt-3 leading-relaxed">원료 유형과 준비 조건이 건조 공정에 미치는 영향을 살펴봐요.</p></div><div class="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px] text-slate-400"><span>구성안 · 본문 미리보기 준비 전</span><span class="font-semibold text-sky-500 flex items-center gap-1">과정 보기<i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span></div></a><a href="#learning" class="group p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 hover:border-sky-500/50 hover:shadow-xl transition-all flex flex-col justify-between"><div><div class="flex items-center justify-between mb-4"><div class="w-11 h-11 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-500 flex items-center justify-center group-hover:scale-110 transition-transform"><i data-lucide="thermometer" class="w-5 h-5"></i></div><span class="text-[11px] font-mono text-slate-400">MODULE 03</span></div><h3 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-sky-500 transition-colors">열·물질 전달과 CDI</h3><p class="text-sm text-slate-600 dark:text-slate-300 mt-3 leading-relaxed">열 공급·수증기 포집·제빙이 연결되는 이유를 이해해요.</p></div><div class="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px] text-slate-400"><span>구성안 · 본문 미리보기 준비 전</span><span class="font-semibold text-sky-500 flex items-center gap-1">과정 보기<i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span></div></a><a href="#learning" class="group p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 hover:border-sky-500/50 hover:shadow-xl transition-all flex flex-col justify-between"><div><div class="flex items-center justify-between mb-4"><div class="w-11 h-11 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 flex items-center justify-center group-hover:scale-110 transition-transform"><i data-lucide="activity" class="w-5 h-5"></i></div><span class="text-[11px] font-mono text-slate-400">MODULE 04</span></div><h3 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-sky-500 transition-colors">공정 변수와 추세 해석</h3><p class="text-sm text-slate-600 dark:text-slate-300 mt-3 leading-relaxed">값 하나보다 운전 맥락과 여러 변수의 동시 변화를 읽어요.</p></div><div class="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px] text-slate-400"><span>구성안 · 본문 미리보기 준비 전</span><span class="font-semibold text-sky-500 flex items-center gap-1">과정 보기<i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span></div></a><a href="#learning" class="group p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 hover:border-sky-500/50 hover:shadow-xl transition-all flex flex-col justify-between"><div><div class="flex items-center justify-between mb-4"><div class="w-11 h-11 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-500 flex items-center justify-center group-hover:scale-110 transition-transform"><i data-lucide="clipboard-list" class="w-5 h-5"></i></div><span class="text-[11px] font-mono text-slate-400">MODULE 05</span></div><h3 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-sky-500 transition-colors">이상 징후와 근거 기반 보고</h3><p class="text-sm text-slate-600 dark:text-slate-300 mt-3 leading-relaxed">가능한 설명과 추가 확인 정보를 구분해 보고해요.</p></div><div class="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px] text-slate-400"><span>구성안 · 본문 미리보기 준비 전</span><span class="font-semibold text-sky-500 flex items-center gap-1">과정 보기<i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span></div></a><a href="#learning" class="group p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 hover:border-sky-500/50 hover:shadow-xl transition-all flex flex-col justify-between"><div><div class="flex items-center justify-between mb-4"><div class="w-11 h-11 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-500 flex items-center justify-center group-hover:scale-110 transition-transform"><i data-lucide="shield-check" class="w-5 h-5"></i></div><span class="text-[11px] font-mono text-slate-400">MODULE 06</span></div><h3 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-sky-500 transition-colors">품질 연결과 종합 사례</h3><p class="text-sm text-slate-600 dark:text-slate-300 mt-3 leading-relaxed">공정 상태·제품 품질·기록을 하나의 사례로 연결해요.</p></div><div class="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px] text-slate-400"><span>구성안 · 본문 미리보기 준비 전</span><span class="font-semibold text-sky-500 flex items-center gap-1">과정 보기<i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span></div></a></div><div class="mt-6 p-4 rounded-xl bg-sky-500/5 border border-sky-500/20 text-sm text-slate-600 dark:text-slate-300 flex gap-3 items-start"><i data-lucide="info" class="w-5 h-5 text-sky-500 shrink-0 mt-0.5"></i><p>관찰·기록·인수인계·보고를 다뤄요. 실제 조작·정비·독자적인 고장 확정은 제외하고, 현장 운전값·정상 기준은 승인 문서로 확인해요.</p></div></section>
+      <!-- 5 Disciplines Section -->
+      <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
+          <div>
+            <div class="text-xs font-mono font-semibold uppercase tracking-wider text-sky-600 dark:text-sky-400">
+              Systematic Knowledge Tree
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mt-1">
+              동결건조 5대 공학 파트 체계
+            </h2>
+          </div>
+          <a href="#categories" class="text-xs font-semibold text-sky-600 dark:text-sky-400 hover:underline flex items-center gap-1">
+            카테고리 전체 맵 보기 <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+          </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4" id="home-categories-grid">
+          <!-- Populated by JavaScript -->
+        </div>
+      </section>
+
+      <!-- Featured Posts Section -->
+      <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
+          <div>
+            <div class="text-xs font-mono font-semibold uppercase tracking-wider text-sky-600 dark:text-sky-400">
+              In-Depth Field Insights
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mt-1">
+              핵심 추천 기술 아티클
+            </h2>
+          </div>
+          <a href="#posts" class="text-xs font-semibold text-sky-600 dark:text-sky-400 hover:underline flex items-center gap-1">
+            전체 글 보러가기 <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+          </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="home-featured-posts">
+          <!-- Populated by JavaScript -->
+        </div>
+      </section>
+
+    </div>
+
+    <!-- VIEW 2: ALL POSTS -->
+    <div id="view-posts" class="view-panel hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-10">
+      <div class="max-w-3xl">
+        <div class="flex items-center gap-2 text-xs font-mono font-semibold text-sky-600 dark:text-sky-400 uppercase tracking-wider mb-2">
+          <i data-lucide="book-open" class="w-4 h-4"></i> Technical Engineering Archive
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+          동결건조 기술 아티클 전체 아카이브
+        </h1>
+        <p class="text-base text-slate-600 dark:text-slate-400 mt-2">
+          열역학 기초 원리부터 선반 유체 해석, 진공 펌프 배기, 계측 제어 및 GMP 밸리데이션까지 실무 지식을 검색하고 필터링할 수 있습니다.
+        </p>
+      </div>
+
+      <!-- Filters & Search -->
+      <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+        <div class="relative">
+          <i data-lucide="search" class="w-5 h-5 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
+          <input 
+            type="text" 
+            id="posts-search" 
+            placeholder="기술 키워드 검색 (예: 삼중점, Tg', 피라니, 누설률, SIP, 실리콘오일...)"
+            class="w-full pl-11 pr-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all"
+          >
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2 pt-1" id="category-filter-pills">
+          <!-- Filled by JS -->
+        </div>
+      </div>
+
+      <!-- Posts List -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="all-posts-grid">
+        <!-- Filled by JS -->
+      </div>
+    </div>
+
+    <!-- VIEW 3: POST DETAIL -->
+    <div id="view-post-detail" class="view-panel hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+      <!-- Back Button -->
+      <div>
+        <a href="#posts" class="inline-flex items-center gap-2 text-xs font-semibold text-slate-500 hover:text-sky-500 transition-colors">
+          <i data-lucide="arrow-left" class="w-4 h-4"></i> 아티클 목록으로 돌아가기
+        </a>
+      </div>
+
+      <div id="post-detail-content">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+
+    <!-- VIEW 4: CATEGORIES MAP -->
+    <div id="view-categories" class="view-panel hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
+      <div class="max-w-3xl">
+        <div class="flex items-center gap-2 text-xs font-mono font-semibold text-sky-600 dark:text-sky-400 uppercase tracking-wider mb-2">
+          <i data-lucide="layers" class="w-4 h-4"></i> 5 Core Engineering Disciplines
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+          동결건조 5대 공학 카테고리 맵
+        </h1>
+        <p class="text-base text-slate-600 dark:text-slate-400 mt-2">
+          열역학 기초부터 기계 배관, 계측 제어, O&amp;M 유지보수, GMP 밸리데이션까지 5대 핵심 축으로 구조화된 기술 체계입니다.
+        </p>
+      </div>
+
+      <div class="space-y-12" id="categories-full-list">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+
+    <!-- VIEW 5: ENGINEERING CALCULATORS HUB -->
+    <div id="view-tools" class="view-panel hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
+      <div class="max-w-3xl">
+        <div class="flex items-center gap-2 text-xs font-mono font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider mb-2">
+          <i data-lucide="calculator" class="w-4 h-4"></i> Interactive Engineering Tools
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+          동결건조 엔지니어링 인터랙티브 계산기
+        </h1>
+        <p class="text-base text-slate-600 dark:text-slate-400 mt-2">
+          실제 동결건조 설비 운영, 밸리데이션(IQ/OQ/PQ) 및 공정 개발 현장에서 즉시 활용 가능한 정밀 공학 계산 모델을 제공합니다.
+        </p>
+      </div>
+
+      <!-- Tools Tabs -->
+      <div class="flex flex-wrap gap-2 border-b border-slate-200 dark:border-slate-800 pb-3" id="calc-tab-btns">
+        <button onclick="switchCalcTab('leak-rate')" class="calc-tab-btn active px-4 py-2 rounded-xl text-xs font-bold transition-all bg-sky-500 text-white" data-tab="leak-rate">
+          진공 누설률(Leak Rate) 판정기
+        </button>
+        <button onclick="switchCalcTab('vapor-pressure')" class="calc-tab-btn px-4 py-2 rounded-xl text-xs font-bold transition-all bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300" data-tab="vapor-pressure">
+          얼음 증기압 & 승화온도 계산기
+        </button>
+        <button onclick="switchCalcTab('sublimation-rate')" class="calc-tab-btn px-4 py-2 rounded-xl text-xs font-bold transition-all bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300" data-tab="sublimation-rate">
+          1차 건조 승화속도 & Kv 모델러
+        </button>
+        <button onclick="switchCalcTab('pressure-converter')" class="calc-tab-btn px-4 py-2 rounded-xl text-xs font-bold transition-all bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300" data-tab="pressure-converter">
+          진공 압력 단위 변환기
+        </button>
+      </div>
+
+      <!-- Tool 1: Leak Rate Calculator -->
+      <div id="tool-leak-rate" class="calc-tab-pane space-y-6">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          
+          <div class="lg:col-span-7 p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-6">
+            <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center justify-between">
+              <span>누설률 시험 파라미터 입력</span>
+              <span class="text-xs font-mono text-slate-400">Q = (V · ΔP) / Δt</span>
+            </h3>
+
+            <div class="space-y-2">
+              <label class="text-xs font-semibold text-slate-700 dark:text-slate-300 flex justify-between">
+                <span>1. 챔버 + 콘덴서 총 내부 용적 (Liters)</span>
+                <span class="text-[11px] text-slate-400">배관 체적 포함</span>
+              </label>
+              <input type="number" id="lr-vol" value="1200" min="10" step="50" oninput="runLeakRateCalc()" class="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-mono text-sm">
+              <div class="flex gap-2 text-xs text-slate-400">
+                <span>프리셋:</span>
+                <button onclick="setLrVol(350)" class="underline hover:text-sky-400">연구용(350L)</button>
+                <button onclick="setLrVol(1200)" class="underline hover:text-sky-400">중형(1200L)</button>
+                <button onclick="setLrVol(3500)" class="underline hover:text-sky-400">상업용(3500L)</button>
+              </div>
+            </div>
+
+            <div class="space-y-2">
+              <label class="text-xs font-semibold text-slate-700 dark:text-slate-300 flex justify-between">
+                <span>2. 압력 상승량 (ΔP, mbar)</span>
+                <span class="text-[11px] text-slate-400">격리 후 최종 - 기저 압력</span>
+              </label>
+              <input type="number" id="lr-dp" value="0.035" min="0" step="0.001" oninput="runLeakRateCalc()" class="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-mono text-sm">
+            </div>
+
+            <div class="space-y-2">
+              <label class="text-xs font-semibold text-slate-700 dark:text-slate-300 flex justify-between">
+                <span>3. 격리 측정 시간 (분, min)</span>
+                <span class="text-[11px] text-slate-400">표준: 30~60분</span>
+              </label>
+              <input type="number" id="lr-time" value="60" min="1" step="5" oninput="runLeakRateCalc()" class="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-mono text-sm">
+            </div>
+
+            <div class="space-y-2 pt-2 border-t border-slate-100 dark:border-slate-800">
+              <label class="text-xs font-semibold text-slate-700 dark:text-slate-300">
+                4. 적용 합격 규격 기준 (Acceptance Criteria)
+              </label>
+              <div class="grid grid-cols-2 gap-3">
+                <button type="button" onclick="setLrLimit(0.02)" id="lr-limit-002" class="p-3 rounded-xl border border-sky-500 bg-sky-50 dark:bg-sky-950/40 text-left text-sky-700 dark:text-sky-300">
+                  <div class="text-xs font-bold">ISO 13408-3 표준</div>
+                  <div class="text-[11px] font-mono mt-0.5">≤ 0.020 mbar·L/s</div>
+                </button>
+                <button type="button" onclick="setLrLimit(0.01)" id="lr-limit-001" class="p-3 rounded-xl border border-slate-200 dark:border-slate-800 text-left text-slate-600 dark:text-slate-400">
+                  <div class="text-xs font-bold">고도 무균 엄격 기준</div>
+                  <div class="text-[11px] font-mono mt-0.5">≤ 0.010 mbar·L/s</div>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Output -->
+          <div class="lg:col-span-5 space-y-6">
+            <div id="lr-result-box" class="p-7 rounded-3xl border shadow-lg bg-emerald-50/70 dark:bg-emerald-950/40 border-emerald-500/50 text-emerald-900 dark:text-emerald-100 space-y-4">
+              <div class="flex items-center justify-between text-xs font-bold uppercase tracking-wider">
+                <span>적격성 판정 결과</span>
+                <span id="lr-ratio-text">기준 대비 58.3%</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <div id="lr-icon" class="text-3xl">✅</div>
+                <div>
+                  <div id="lr-status-title" class="text-2xl font-extrabold">적합 (PASS - 합격)</div>
+                  <div id="lr-limit-info" class="text-xs opacity-80">허용치: ≤ 0.020 mbar·L/s</div>
+                </div>
+              </div>
+              <div class="p-4 rounded-2xl bg-white/80 dark:bg-slate-900/80 border border-slate-200/50 dark:border-slate-800/50 space-y-2">
+                <div class="flex justify-between text-xs">
+                  <span class="text-slate-500">산출 누설률 (Q):</span>
+                  <span id="lr-val-mbar" class="text-base font-extrabold font-mono text-slate-900 dark:text-white">0.01167 mbar·L/s</span>
+                </div>
+                <div class="flex justify-between text-xs">
+                  <span class="text-slate-500">Torr 환산치:</span>
+                  <span id="lr-val-torr" class="font-mono text-slate-700 dark:text-slate-300">0.00875 Torr·L/s</span>
+                </div>
+              </div>
+              <p id="lr-explanation" class="text-xs leading-relaxed">
+                기준치(0.02 mbar·L/s)의 58.3% 수준으로 매우 안정적인 밀폐 상태입니다. 무균 제조 동결건조 공정 적합.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Tool 2: Vapor Pressure Calculator -->
+      <div id="tool-vapor-pressure" class="calc-tab-pane hidden space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          
+          <div class="p-7 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-6">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-cyan-600 dark:text-cyan-400">
+              모드 1: 얼음 온도 → 포화 수증기압 (P_ice)
+            </h3>
+            <div class="space-y-3">
+              <div class="flex justify-between text-xs font-semibold">
+                <span>얼음 표면 온도 (T, °C)</span>
+                <span id="vp-temp-disp" class="font-mono text-cyan-500 font-bold text-base">-25 °C</span>
+              </div>
+              <input type="range" id="vp-temp-range" min="-60" max="0.01" step="0.5" value="-25" oninput="syncVpTemp(this.value)" class="w-full accent-cyan-500">
+              <input type="number" id="vp-temp-num" min="-80" max="0.01" step="0.1" value="-25" oninput="syncVpTemp(this.value)" class="w-full px-4 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-mono text-sm">
+            </div>
+
+            <div class="p-5 rounded-2xl bg-cyan-50/50 dark:bg-cyan-950/30 border border-cyan-500/20 space-y-3">
+              <div class="text-xs font-bold text-cyan-800 dark:text-cyan-300">포화 증기압 계산 결과</div>
+              <div class="grid grid-cols-2 gap-3 text-center">
+                <div class="p-3 rounded-xl bg-white dark:bg-slate-900 border border-cyan-500/20">
+                  <div class="text-[10px] text-slate-400 font-mono">mbar</div>
+                  <div id="vp-res-mbar" class="text-lg font-bold font-mono text-slate-900 dark:text-white">0.632</div>
+                </div>
+                <div class="p-3 rounded-xl bg-white dark:bg-slate-900 border border-cyan-500/20">
+                  <div class="text-[10px] text-slate-400 font-mono">mTorr (micron)</div>
+                  <div id="vp-res-mtorr" class="text-lg font-bold font-mono text-cyan-500">474.3</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-7 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-6">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-purple-600 dark:text-purple-400">
+              모드 2: 챔버 압력 → 승화 평형 온도 역계산
+            </h3>
+            <div class="space-y-3">
+              <label class="text-xs font-semibold flex justify-between">
+                <span>챔버 제어 진공도 (P_c, mbar)</span>
+                <span id="vp-press-disp" class="font-mono text-purple-500 font-bold">0.10 mbar</span>
+              </label>
+              <input type="number" id="vp-press-input" value="0.10" min="0.005" max="6.11" step="0.01" oninput="runInverseTempCalc()" class="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-mono text-sm">
+            </div>
+
+            <div class="p-6 rounded-2xl bg-purple-50/50 dark:bg-purple-950/30 border border-purple-500/20 text-center space-y-2">
+              <div class="text-xs text-slate-400 font-mono">얼음 승화면 평형 온도 (T_ice)</div>
+              <div id="vp-inv-temp" class="text-3xl font-black font-mono text-purple-600 dark:text-purple-400">-41.8 °C</div>
+              <p class="text-xs text-slate-500 pt-2">
+                제품 승화면 온도가 이 온도 이상이어야 챔버 방향으로 승화 수증기가 유동합니다.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Tool 3: Sublimation Modeler -->
+      <div id="tool-sublimation-rate" class="calc-tab-pane hidden space-y-6">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          <div class="lg:col-span-7 p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-6">
+            <h3 class="text-base font-bold text-slate-900 dark:text-white">공정 파라미터 입력</h3>
+            
+            <div class="space-y-2">
+              <label class="text-xs font-semibold flex justify-between">
+                <span>선반 설정 온도 (T_shelf, °C)</span>
+                <span id="sub-shelf-disp" class="font-mono font-bold text-amber-500">-10 °C</span>
+              </label>
+              <input type="range" id="sub-shelf-temp" min="-40" max="25" step="1" value="-10" oninput="runSublimationModel()" class="w-full accent-amber-500">
+            </div>
+
+            <div class="space-y-2">
+              <label class="text-xs font-semibold flex justify-between">
+                <span>챔버 압력 (P_c, mbar)</span>
+                <span id="sub-pc-disp" class="font-mono font-bold text-sky-500">0.10 mbar</span>
+              </label>
+              <input type="range" id="sub-pc-range" min="0.03" max="0.5" step="0.01" value="0.10" oninput="runSublimationModel()" class="w-full accent-sky-500">
+            </div>
+
+            <div class="space-y-2">
+              <label class="text-xs font-semibold">바이알 규격 선택</label>
+              <div class="grid grid-cols-4 gap-2">
+                <button type="button" onclick="setSubVial(1.77)" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-xs font-mono">2R (1.77cm²)</button>
+                <button type="button" onclick="setSubVial(3.80)" class="p-2 rounded-lg bg-amber-500 text-white font-bold text-xs font-mono" id="sub-btn-6r">6R (3.80cm²)</button>
+                <button type="button" onclick="setSubVial(4.52)" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-xs font-mono">10R (4.52cm²)</button>
+                <button type="button" onclick="setSubVial(7.07)" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-xs font-mono">20R (7.07cm²)</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-5 p-7 rounded-3xl bg-amber-50/70 dark:bg-amber-950/30 border border-amber-500/40 space-y-4">
+            <div class="text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400">시뮬레이션 예측 결과</div>
+            <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-amber-500/30">
+              <div class="text-xs text-slate-500 font-mono">바이알당 승화 속도</div>
+              <div id="sub-res-rate" class="text-3xl font-black font-mono text-amber-600 dark:text-amber-400 mt-1">0.185 g/hr</div>
+            </div>
+            <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-amber-500/30">
+              <div class="text-xs text-slate-500 font-mono">총괄 열전달계수 (Kv)</div>
+              <div id="sub-res-kv" class="text-2xl font-bold font-mono text-slate-900 dark:text-white mt-1">24.9 W/m²·K</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tool 4: Pressure Converter -->
+      <div id="tool-pressure-converter" class="calc-tab-pane hidden space-y-6">
+        <div class="p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-6">
+          <div class="grid grid-cols-1 sm:grid-cols-12 gap-4">
+            <div class="sm:col-span-8">
+              <label class="text-xs font-semibold mb-2 block">변환할 압력 수치 입력</label>
+              <input type="number" id="pc-val" value="0.10" step="any" oninput="runPressureConverter()" class="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-lg font-mono font-bold">
+            </div>
+            <div class="sm:col-span-4">
+              <label class="text-xs font-semibold mb-2 block">기준 단위 선택</label>
+              <select id="pc-unit" onchange="runPressureConverter()" class="w-full px-4 py-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-semibold text-sm">
+                <option value="mbar">mbar (밀리바)</option>
+                <option value="mTorr">mTorr (마이크론)</option>
+                <option value="Pa">Pa (파스칼)</option>
+                <option value="Torr">Torr (토르)</option>
+                <option value="psi">psi</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-4 pt-4 border-t border-slate-100 dark:border-slate-800">
+            <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+              <div class="text-[10px] text-slate-400 font-mono">mbar</div>
+              <div id="pc-out-mbar" class="text-xl font-bold font-mono text-sky-500 mt-1">0.1000</div>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+              <div class="text-[10px] text-slate-400 font-mono">mTorr (micron)</div>
+              <div id="pc-out-mtorr" class="text-xl font-bold font-mono text-emerald-500 mt-1">75.01</div>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+              <div class="text-[10px] text-slate-400 font-mono">Pascal (Pa)</div>
+              <div id="pc-out-pa" class="text-xl font-bold font-mono text-cyan-500 mt-1">10.000</div>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+              <div class="text-[10px] text-slate-400 font-mono">Torr (mmHg)</div>
+              <div id="pc-out-torr" class="text-xl font-bold font-mono text-purple-500 mt-1">0.0750</div>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+              <div class="text-[10px] text-slate-400 font-mono">psi (lbf/in²)</div>
+              <div id="pc-out-psi" class="text-xl font-bold font-mono text-amber-500 mt-1">0.00145</div>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+              <div class="text-[10px] text-slate-400 font-mono">atm (표준대기압)</div>
+              <div id="pc-out-atm" class="text-xl font-bold font-mono text-slate-500 mt-1">0.000099</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- VIEW 6: INTERACTIVE P&ID DIAGRAM -->
+    <div id="view-diagram" class="view-panel hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-8">
+      <div class="max-w-3xl">
+        <div class="flex items-center gap-2 text-xs font-mono font-semibold text-purple-600 dark:text-purple-400 uppercase tracking-wider mb-2">
+          <i data-lucide="network" class="w-4 h-4"></i> Process &amp; Instrumentation Diagram (P&amp;ID)
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+          동결건조기 전 계통 대화형 도면 (P&amp;ID Explorer)
+        </h1>
+        <p class="text-base text-slate-600 dark:text-slate-400 mt-2">
+          챔버, 선반 열매체 순환 루프, 고속 메인 격리 밸브, -85℃ 극저온 콘덴서 트랩, 루츠-스크류 진공 펌프 및 CIP/SIP 멸균 시스템의 상호 연결 관계를 파악할 수 있는 인터랙티브 설비 다이어그램입니다.
+        </p>
+      </div>
+
+      <!-- Diagram Interactive Board -->
+      <div class="p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl space-y-6">
+        <div class="p-6 rounded-2xl bg-slate-950 border border-slate-800 text-white overflow-x-auto">
+          <div class="min-w-[650px] flex flex-col gap-6">
+            
+            <div class="grid grid-cols-12 gap-4 items-center">
+              <!-- Chamber Box -->
+              <div onclick="selectPidComp('chamber')" id="pid-node-chamber" class="col-span-5 p-5 rounded-2xl cursor-pointer border-2 border-sky-500 bg-sky-950/40 shadow-lg shadow-sky-500/20 transition-all">
+                <div class="text-xs font-bold text-sky-400 uppercase flex justify-between">
+                  <span>Drying Chamber</span>
+                  <span class="text-[10px] bg-sky-500/20 px-2 py-0.5 rounded text-sky-300">선반 & 챔버</span>
+                </div>
+                <div class="font-bold text-base mt-1">동결건조 챔버 및 선반</div>
+                <div class="mt-2 space-y-1 bg-slate-900/80 p-2 rounded">
+                  <div class="h-2 rounded bg-amber-500/80 w-full"></div>
+                  <div class="h-2 rounded bg-amber-500/80 w-full"></div>
+                  <div class="h-2 rounded bg-amber-500/80 w-full"></div>
+                </div>
+              </div>
+
+              <!-- Isolation Valve -->
+              <div onclick="selectPidComp('isolation-valve')" id="pid-node-isolation-valve" class="col-span-2 p-3 rounded-xl cursor-pointer border-2 border-slate-700 bg-slate-900 text-center transition-all hover:border-slate-500">
+                <div class="text-[10px] font-bold text-indigo-400 font-mono">VALVE</div>
+                <div class="w-8 h-8 mx-auto my-1 rounded-full border-2 border-indigo-400 flex items-center justify-center font-bold text-xs bg-indigo-950 text-indigo-300">⧓</div>
+                <div class="text-[11px] font-bold">메인 밸브</div>
+              </div>
+
+              <!-- Condenser Box -->
+              <div onclick="selectPidComp('condenser')" id="pid-node-condenser" class="col-span-5 p-5 rounded-2xl cursor-pointer border-2 border-slate-700 bg-slate-900 transition-all hover:border-slate-500">
+                <div class="text-xs font-bold text-cyan-400 uppercase flex justify-between">
+                  <span>Ice Condenser</span>
+                  <span class="text-[10px] bg-cyan-500/20 px-2 py-0.5 rounded text-cyan-300">-85℃ 트랩</span>
+                </div>
+                <div class="font-bold text-base mt-1">응축기 (콜드트랩 코일)</div>
+                <div class="mt-2 flex justify-around bg-slate-900/80 p-2 rounded">
+                  <div class="w-1.5 h-6 bg-cyan-400 rounded-full animate-pulse"></div>
+                  <div class="w-1.5 h-6 bg-cyan-400 rounded-full animate-pulse"></div>
+                  <div class="w-1.5 h-6 bg-cyan-400 rounded-full animate-pulse"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Subsystems -->
+            <div class="grid grid-cols-4 gap-4">
+              <div onclick="selectPidComp('shelves-htf')" id="pid-node-shelves-htf" class="p-3 rounded-xl cursor-pointer border-2 border-slate-800 bg-slate-900/60 hover:border-slate-600 transition-all text-xs">
+                <div class="text-amber-400 font-bold">HTF 실리콘오일 루프</div>
+                <div class="text-slate-400 text-[11px] mt-0.5">-60℃ ~ +80℃ 순환</div>
+              </div>
+              <div onclick="selectPidComp('dual-gauges')" id="pid-node-dual-gauges" class="p-3 rounded-xl cursor-pointer border-2 border-slate-800 bg-slate-900/60 hover:border-slate-600 transition-all text-xs">
+                <div class="text-emerald-400 font-bold">피라니 &amp; 바라트론</div>
+                <div class="text-slate-400 text-[11px] mt-0.5">이중 압력 계측계</div>
+              </div>
+              <div onclick="selectPidComp('vacuum-system')" id="pid-node-vacuum-system" class="p-3 rounded-xl cursor-pointer border-2 border-slate-800 bg-slate-900/60 hover:border-slate-600 transition-all text-xs">
+                <div class="text-purple-400 font-bold">진공 펌프 배기계</div>
+                <div class="text-slate-400 text-[11px] mt-0.5">Roots + Screw Pump</div>
+              </div>
+              <div onclick="selectPidComp('cip-sip')" id="pid-node-cip-sip" class="p-3 rounded-xl cursor-pointer border-2 border-slate-800 bg-slate-900/60 hover:border-slate-600 transition-all text-xs">
+                <div class="text-teal-400 font-bold">CIP / SIP 멸균 계통</div>
+                <div class="text-slate-400 text-[11px] mt-0.5">순수증기 121℃ 펄싱</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Component Detail Panel -->
+        <div id="pid-detail-panel" class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-950/70 border border-slate-200 dark:border-slate-800 space-y-4">
+          <!-- Filled by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 7: ABOUT -->
+    <div id="view-about" class="view-panel hidden max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
+      <div class="max-w-3xl">
+        <div class="flex items-center gap-2 text-xs font-mono font-semibold text-sky-600 dark:text-sky-400 uppercase tracking-wider mb-2">
+          <i data-lucide="user" class="w-4 h-4"></i> About the Engineering Archive
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+          동결건조 설비기술 &amp; 공학 이론 블로그 소개
+        </h1>
+        <p class="text-base text-slate-600 dark:text-slate-400 mt-2">
+          현장 엔지니어의 실무 경험과 엄밀한 열역학·물질전달 이론을 결합하여, 바이오·제약 동결건조 설비 운영 및 기술 표준을 공유합니다.
+        </p>
+      </div>
+
+      <div class="p-8 sm:p-10 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-6">
+        <div class="flex items-center gap-4 pb-6 border-b border-slate-100 dark:border-slate-800">
+          <div class="w-16 h-16 rounded-2xl bg-sky-500 flex items-center justify-center text-white text-3xl font-black">
+            ❄️
+          </div>
+          <div>
+            <h2 class="text-2xl font-bold text-slate-900 dark:text-white">신동길 (Lyo Systems Engineer)</h2>
+            <p class="text-sm font-mono text-slate-500 dark:text-slate-400">동결건조 설비기술(Equipment Engineering) &amp; 공정 스케일업(MSAT) 전문</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs text-slate-600 dark:text-slate-300">
+          <div class="space-y-2">
+            <h3 class="font-bold text-slate-900 dark:text-white text-sm">🛠️ 기계·설비 엔지니어링 전문 영역</h3>
+            <p>• 고진공 챔버 기밀도 밸리데이션 (누설률 시험, 헬륨 질량분석)</p>
+            <p>• 선반 실리콘 오일(HTF) 순환계통 및 선반 온도 균일도(±1.0℃) 제어</p>
+            <p>• 2원 냉동기(Cascade) 및 -85℃ 극저온 응축기(Ice Condenser) 트랩 공학</p>
+            <p>• CIP/SIP 순수증기 자동 멸균 시퀀스 및 F0 열침투 적분 계산</p>
+          </div>
+          <div class="space-y-2">
+            <h3 class="font-bold text-slate-900 dark:text-white text-sm">📐 열역학 &amp; 공정 이론 전문 영역</h3>
+            <p>• 물의 상태도와 삼중점(0.01℃, 6.11 mbar) 경계조건 수립</p>
+            <p>• 비정질 부형제 유리전이(Tg') 및 붕괴온도(Tc) 제어</p>
+            <p>• 결정질 부형제(만니톨) 공융점(Teu) 및 어닐링(Annealing) 열처리 사이클</p>
+            <p>• 케이크 결함 5대 유형(Collapse, Meltback, Puffing 등) 원인 분석</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<div id="view-learning" class="view-panel hidden edu pb-16"><div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8"><a href="#home" class="text-xs text-sky-500 flex items-center gap-1 mb-6"><i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>홈으로</a><div class="p-7 md:p-10 rounded-3xl border border-slate-200 dark:border-slate-800 bg-gradient-to-br from-sky-50 via-white to-indigo-50 dark:from-sky-950/30 dark:via-slate-900 dark:to-indigo-950/30 mb-8"><span class="text-xs font-mono text-sky-500">CONRAD / LEARNING MAP</span><h1 class="text-3xl md:text-4xl font-extrabold tracking-tight mt-3 text-slate-900 dark:text-white">공정 구조<span class="text-sky-500"> → </span>변수 해석<span class="text-sky-500"> → </span>근거 기반 보고</h1><p class="mt-4 text-sm text-slate-600 dark:text-slate-300 leading-relaxed max-w-4xl">대학 졸업 수준의 독해·비례 관계를 바탕으로 설비 경험이 없는 신규자를 위한 과정이에요. 장치 이름 암기에서 끝내지 않고, 변수의 관계·모델 가정·추가로 필요한 정보를 설명해요.</p><div class="flex flex-wrap gap-2 mt-5"><span class="text-xs font-semibold px-2.5 py-1 rounded-lg border bg-sky-500/10 border-sky-500/20 text-sky-600 dark:text-sky-300">개념 → 관계 → 사례 분석</span><span class="text-xs font-semibold px-2.5 py-1 rounded-lg border bg-emerald-500/10 border-emerald-500/20 text-emerald-600 dark:text-emerald-300">관찰·기록·보고</span><span class="text-xs font-semibold px-2.5 py-1 rounded-lg border bg-purple-500/10 border-purple-500/20 text-purple-600 dark:text-purple-300">공개 브로셔 기반</span></div></div><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"><a href="#lesson-conrad" class="group p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 hover:border-sky-500/50 hover:shadow-xl transition-all flex flex-col justify-between"><div><div class="flex items-center justify-between mb-4"><div class="w-11 h-11 rounded-xl bg-sky-500/10 border border-sky-500/20 text-sky-500 flex items-center justify-center group-hover:scale-110 transition-transform"><i data-lucide="network" class="w-5 h-5"></i></div><span class="text-[11px] font-mono text-slate-400">MODULE 01</span></div><h3 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-sky-500 transition-colors">공정 구조와 시스템 경계</h3><p class="text-sm text-slate-600 dark:text-slate-300 mt-3 leading-relaxed">제품·열·수증기의 흐름을 연결해 연속 운전 구조를 설명해요.</p><div class="mt-4 p-3 rounded-xl bg-slate-50 dark:bg-slate-950/60 border border-slate-100 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400 leading-relaxed">시스템 경계 · 연속 이송 · 업무 권한<br><span class="text-sky-500">선수: 업무 경계와 안전 안내 확인</span></div></div><div class="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px] text-slate-400"><span>첫 모듈 · 15분 내외 제안</span><span class="font-semibold text-sky-500 flex items-center gap-1">모듈 열기<i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span></div></a><a href="#learning" class="group p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 hover:border-sky-500/50 hover:shadow-xl transition-all flex flex-col justify-between"><div><div class="flex items-center justify-between mb-4"><div class="w-11 h-11 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-500 flex items-center justify-center group-hover:scale-110 transition-transform"><i data-lucide="boxes" class="w-5 h-5"></i></div><span class="text-[11px] font-mono text-slate-400">MODULE 02</span></div><h3 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-sky-500 transition-colors">원료 특성과 전처리</h3><p class="text-sm text-slate-600 dark:text-slate-300 mt-3 leading-relaxed">원료 유형과 준비 조건이 건조 공정에 미치는 영향을 살펴봐요.</p><div class="mt-4 p-3 rounded-xl bg-slate-50 dark:bg-slate-950/60 border border-slate-100 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400 leading-relaxed">고형분 · 동결·입도 · 트레이 적재<br><span class="text-indigo-500">선수: 앞 모듈의 개념 확인</span></div></div><div class="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px] text-slate-400"><span>구성안 · 본문 미리보기 준비 전</span><span class="font-semibold text-sky-500 flex items-center gap-1">과정 보기<i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span></div></a><a href="#learning" class="group p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 hover:border-sky-500/50 hover:shadow-xl transition-all flex flex-col justify-between"><div><div class="flex items-center justify-between mb-4"><div class="w-11 h-11 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-500 flex items-center justify-center group-hover:scale-110 transition-transform"><i data-lucide="thermometer" class="w-5 h-5"></i></div><span class="text-[11px] font-mono text-slate-400">MODULE 03</span></div><h3 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-sky-500 transition-colors">열·물질 전달과 CDI</h3><p class="text-sm text-slate-600 dark:text-slate-300 mt-3 leading-relaxed">열 공급·수증기 포집·제빙이 연결되는 이유를 이해해요.</p><div class="mt-4 p-3 rounded-xl bg-slate-50 dark:bg-slate-950/60 border border-slate-100 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400 leading-relaxed">승화 · 가열판·콘덴서 · 진공·CDI<br><span class="text-cyan-500">선수: 앞 모듈의 개념 확인</span></div></div><div class="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px] text-slate-400"><span>구성안 · 본문 미리보기 준비 전</span><span class="font-semibold text-sky-500 flex items-center gap-1">과정 보기<i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span></div></a><a href="#learning" class="group p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 hover:border-sky-500/50 hover:shadow-xl transition-all flex flex-col justify-between"><div><div class="flex items-center justify-between mb-4"><div class="w-11 h-11 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 flex items-center justify-center group-hover:scale-110 transition-transform"><i data-lucide="activity" class="w-5 h-5"></i></div><span class="text-[11px] font-mono text-slate-400">MODULE 04</span></div><h3 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-sky-500 transition-colors">공정 변수와 추세 해석</h3><p class="text-sm text-slate-600 dark:text-slate-300 mt-3 leading-relaxed">값 하나보다 운전 맥락과 여러 변수의 동시 변화를 읽어요.</p><div class="mt-4 p-3 rounded-xl bg-slate-50 dark:bg-slate-950/60 border border-slate-100 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400 leading-relaxed">단위·측정 위치 · 기준·추세 · 시간 관계<br><span class="text-emerald-500">선수: 앞 모듈의 개념 확인</span></div></div><div class="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px] text-slate-400"><span>구성안 · 본문 미리보기 준비 전</span><span class="font-semibold text-sky-500 flex items-center gap-1">과정 보기<i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span></div></a><a href="#learning" class="group p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 hover:border-sky-500/50 hover:shadow-xl transition-all flex flex-col justify-between"><div><div class="flex items-center justify-between mb-4"><div class="w-11 h-11 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-500 flex items-center justify-center group-hover:scale-110 transition-transform"><i data-lucide="clipboard-list" class="w-5 h-5"></i></div><span class="text-[11px] font-mono text-slate-400">MODULE 05</span></div><h3 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-sky-500 transition-colors">이상 징후와 근거 기반 보고</h3><p class="text-sm text-slate-600 dark:text-slate-300 mt-3 leading-relaxed">가능한 설명과 추가 확인 정보를 구분해 보고해요.</p><div class="mt-4 p-3 rounded-xl bg-slate-50 dark:bg-slate-950/60 border border-slate-100 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400 leading-relaxed">사실·가설 · 비교 조건 · 인수인계<br><span class="text-amber-500">선수: 앞 모듈의 개념 확인</span></div></div><div class="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px] text-slate-400"><span>구성안 · 본문 미리보기 준비 전</span><span class="font-semibold text-sky-500 flex items-center gap-1">과정 보기<i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span></div></a><a href="#learning" class="group p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 hover:border-sky-500/50 hover:shadow-xl transition-all flex flex-col justify-between"><div><div class="flex items-center justify-between mb-4"><div class="w-11 h-11 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-500 flex items-center justify-center group-hover:scale-110 transition-transform"><i data-lucide="shield-check" class="w-5 h-5"></i></div><span class="text-[11px] font-mono text-slate-400">MODULE 06</span></div><h3 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-sky-500 transition-colors">품질 연결과 종합 사례</h3><p class="text-sm text-slate-600 dark:text-slate-300 mt-3 leading-relaxed">공정 상태·제품 품질·기록을 하나의 사례로 연결해요.</p><div class="mt-4 p-3 rounded-xl bg-slate-50 dark:bg-slate-950/60 border border-slate-100 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400 leading-relaxed">품질 속성 · 기록 신뢰성 · 종합 해석<br><span class="text-purple-500">선수: 앞 모듈의 개념 확인</span></div></div><div class="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px] text-slate-400"><span>구성안 · 본문 미리보기 준비 전</span><span class="font-semibold text-sky-500 flex items-center gap-1">과정 보기<i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span></div></a></div><div class="mt-7 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-sm text-slate-500 dark:text-slate-400 leading-relaxed"><strong class="text-slate-900 dark:text-white">평가와 업무 권한은 별개예요.</strong> 읽음·퀴즈·모델 계산이 현장 역량 확인이나 작업 허가를 대신하지 않아요. 진도 저장·공식 이력 기능은 없는 디자인 미리보기예요.</div></div></div><div id="view-lesson-conrad" class="view-panel hidden edu pb-16"><div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8"><div class="breadcrumb"><a href="#home">홈</a> / <a href="#learning">학습 지도</a> / 01 공정 구조와 시스템 경계</div><div class="lesson-layout"><aside class="side"><div class="num">MODULE 01</div><h3>연속 공정의 구조</h3><a href="#s-goals" class="active">학습 목표</a><a href="#s-story">시스템과 흐름</a><a href="#s-case">변수 관계와 사례</a><a href="#s-task">분석·기록 과제</a><a href="#s-quiz">적용 질문·해설</a><a href="#s-source">근거와 한계</a><hr><a href="#learning">← 전체 학습 지도</a></aside><article class="lesson"><div class="eyebrow">공정 이해 · 15분 내외 제안</div><h1>CONRAD 연속 공정의 구조와 변수</h1><p>장치 이름을 외우는 데서 그치지 않고, 제품 이송·열 공급·수증기 포집이 어떻게 연결되는지 설명해요. 전공 지식은 필수로 가정하지 않아요.</p><div class="goals" id="s-goals"><strong>학습 목표</strong><ol><li>제품·열·수증기의 흐름과 각 계통의 역할을 구분해 설명해요.</li><li>트레이 적재·이송 빈도·재류시간의 관계를 가정과 함께 해석해요.</li><li>관찰 사실에서 가능한 설명과 추가 확인 정보를 도출해 보고해요.</li></ol></div><section><h2>분석의 범위와 업무 권한</h2><p>공정의 가능한 변화를 생각하는 것과 원인을 확정하거나 조작하는 것은 달라요. 이 과정은 관찰·기록·보고까지 다루며, 설정 변경·재기동·정비는 포함하지 않아요. 실제 판정에는 승인된 기준과 현장 절차가 필요해요.</p></section><section id="s-story"><h2>1. 세 가지 흐름으로 시스템을 읽기</h2><p>CONRAD는 냉동 제품이 담긴 트레이를 입구 에어록으로 투입하고, 엘리베이터와 이송 계통을 통해 여러 건조 구역을 통과시키는 연속식 설비예요. 제품은 출구에서 배출되고 빈 트레이는 복귀해요. 제품 유형에 따라 동결·분쇄·체질 등 상류 준비 경로는 달라져요.</p><div class="flow-panel"><div class="caption"><span>제품·트레이 흐름</span><span>브로셔 p.8–10</span></div><div class="route"><div class="node"><i data-lucide="boxes"></i>냉동 제품<br>트레이 충전</div><span class="arrow">→</span><div class="node"><i data-lucide="door-open"></i>입구<br>에어록</div><span class="arrow">→</span><div class="node accent"><i data-lucide="layers"></i>이송·건조<br>구역</div><span class="arrow">→</span><div class="node"><i data-lucide="package-check"></i>출구·제품<br>배출</div></div><div class="return">빈 트레이는 복귀 경로를 따라 돌아가요</div><div class="flow-note"><div><b>수증기 포집</b>제품의 얼음 → 수증기 → 내부 콘덴서</div><div><b>CDI · 연속 제빙</b>콘덴서의 얼음 제거로 연속 공정 지원</div></div><p class="source">기능을 단순화한 교육 도식이며 실제 P&ID·조작 순서가 아니에요.</p></div><div class="example"><span class="label">브로셔에서 확인되는 구조 · p.5·8–10</span><p><b>제품 흐름:</b> 전처리·충전 → 에어록·이송 → 건조 구역 → 배출.<br><b>열의 흐름:</b> 가열판에서 제품 쪽으로 건조에 필요한 열을 전달.<br><b>수증기 흐름:</b> 제품에서 발생한 수증기를 내부 콘덴서에 포집.</p></div><p>이 세 흐름은 연결되지만 같은 계통이 아니에요. 콘덴서는 수증기를 포집하고, CDI는 콘덴서의 제빙을 통해 연속 공정을 지원해요. 브로셔는 진공을 잃지 않는 자동 제빙 구조를 설명하지만 실제 인터록·순서·조건값은 제공하지 않아요.</p><h2 style="margin-top:30px">2. 투입량과 재류시간을 구분하기</h2><p><b>재류시간</b>은 제품이 정한 공정 구간 안에 머무는 시간이에요. 투입을 늘린다고 건조 능력이 같은 비율로 증가한다고 단정할 수는 없어요. 적재량·제품 특성·열 공급·수증기 처리 등 함께 확인할 조건이 있어요.</p><div class="example"><span class="label">교육용 단순 모델 · 제작사 설계식이나 운전 지침이 아니에요</span><p>투입량(kg/h) = 트레이당 적재량(kg/트레이) × 투입 빈도(트레이/h)</p><p>정상상태·일정한 경로·일정한 이송을 가정하면,<br>평균 재류시간(h) ≈ 구간 내 트레이 수 ÷ 통과 빈도(트레이/h)</p><p>실제 CONRAD의 주기적 이송·대기·구역별 체류는 이 단순식만으로 확정할 수 없어요. 브로셔에 없는 관계를 사고 연습용 모델로 덧붙인 것이에요.</p></div><p><b>예상 관계:</b> 구간 내 트레이 수가 일정한 단순 모델에서 통과 빈도가 늘면 평균 재류시간은 짧아져요. 반면 적재량만 늘리고 통과 빈도가 같다면 투입량은 늘지만 계산상 재류시간은 변하지 않아요. 두 경우는 공정에 같은 변화를 주는 것이 아니에요.</p><div class="example"><span class="label">원문 확인과 적용 한계</span><p>브로셔 7쪽은 제품 고형분 조건에 따라 처리량 예를 달리 제시해요. 이 표는 조건 비교 자료이지 우리 설비의 생산 보증이나 운전 목표가 아니에요.</p><a class="small-link" href="https://cdn.gea.com/-/media/campaigns/freeze-drying/conrad-freeze-drying-technology.pdf?rev=14052#page=7" target="_blank" rel="noopener">공개 브로셔 확인 ↗</a></div></section><section id="s-case"><h2>3. 동시에 변한 값은 원인일까?</h2><div class="example"><span class="label">가상 교육 사례 · 실제 기록·정상 범위 아님</span><p>같은 제품을 처리 중이라는 설명과 함께 다음 기록이 주어졌어요.</p><ul><li>이송 이벤트 간격이 이전보다 길어졌어요.</li><li>같은 구간에서 챔버 압력 지시값이 상승했어요.</li><li>트레이 적재량·제품 온도·CDI 상태·계기 상태는 주어지지 않았어요.</li></ul><p><b>관찰 사실:</b> 이송 간격과 압력 표시가 같은 시간 구간에서 변했어요.<br><b>아직 말할 수 없는 것:</b> 어느 변화가 원인인지, 누설이 발생했는지, 제품 품질이 기준을 벗어났는지는 확정할 수 없어요.</p><p><b>확인할 정보:</b> 공정 단계와 비교 시점, 원료·적재 변화, 시간 동기화된 이송/압력 추세, 표시된 CDI 상태·경보, 적용 기준과 계기 상태. 이 중 실제 제공되는 항목만 권한 내에서 확인해요.</p></div><p>가능한 설명을 비교하는 것은 도움이 되지만, 브로셔만으로 고장별 진단 규칙을 만들 수는 없어요. 보고는 <b>사실 → 가능한 설명과 한계 → 추가 확인 요청</b>으로 구성하고, 실제 시행한 승인 조치가 없으면 ‘시행 없음’으로 기록해요.</p></section><section id="s-task"><h2>분석·기록 과제</h2><ol><li>제품·열·수증기 계통의 연결을 각각 표시하고 CDI가 필요한 이유를 설명해요.</li><li>적재량 증가와 이송 빈도 증가를 비교해 투입량·재류시간에 대한 예상 관계와 모델 가정을 적어요.</li><li>가상 사례를 확인된 사실 / 가능한 설명 / 부족한 정보로 나누고, 시각·단위·비교 조건을 포함한 보고안을 작성해요.</li></ol><p class="source">답안을 저장·제출하거나 현장 역량을 인증하는 기능은 없어요.</p></section><section id="s-quiz"><h2>적용 질문과 해설</h2><p>정답 암기보다 판단 근거와 적용 한계를 확인해요.</p><details><summary>1. 투입량을 늘린 두 방법은 공정에 같은 영향을 줄까요?</summary><p><b>상황:</b> A는 트레이 적재량만, B는 투입 빈도만 늘렸어요. 구간 내 트레이 수가 일정한 단순 모델에서 비교해 보세요.</p><p><b>해설:</b> 둘 다 투입량을 늘릴 수 있지만 A의 재류시간은 계산상 같고 B는 짧아져요. ‘투입량이 같으면 건조 결과도 같다’는 결론은 열·물질 전달과 제품 조건을 무시해요. 실제 설비 적용에는 이송 구조와 부하 조건을 확인해야 해요.</p></details><details><summary>2. 압력 상승과 이송 지연이 함께 나타나면 원인을 확정할 수 있을까요?</summary><p><b>해설:</b> 시간상 함께 나타난 것만으로 인과를 확정할 수 없어요. 시각·단위·비교 조건을 맞춘 추세, 제품·적재·계기·CDI 상태 등 추가 정보가 필요해요. ‘누설 확정’과 ‘재기동 필요’는 주어진 근거를 넘어선 결론이에요.</p></details><details><summary>3. CDI를 연속 공정의 일부로 봐야 하는 이유는 무엇일까요?</summary><p><b>해설:</b> 수증기 포집과 콘덴서 제빙을 함께 고려해야 연속 운전 구조를 설명할 수 있어요. 브로셔는 운전 진공을 잃지 않는 제빙을 설명해요. 이것이 어떤 상태에서도 무중단 운전이나 제품 합격을 보증한다는 뜻은 아니며, 실제 제빙 시퀀스와 인터록은 별도 자료가 필요해요.</p></details></section><section id="s-source"><h2>출처·모델 가정·검토 상태</h2><p class="source">GEA 공개 브로셔 p.4–5·10: 원료 준비, p.7: 조건별 처리량 예, p.8–9: 연속 이송·가열판·콘덴서·CDI. 재류시간 관계는 교육용 일반화 모델이며 브로셔 명시식이 아니에요. 가상 사례는 실제 이상 진단 규칙이 아니에요. 현장 구성·SOP·안전/품질 검토와 학습자 시험은 미실시 상태예요.</p></section><div class="mobile-next"><a class="btn" href="#learning">← 학습 지도</a><div class="help"><div class="eyebrow">다음 모듈</div><h3>원료 특성과 전처리</h3><p>고형분·동결·입도·적재 조건을 공정 변수와 연결해요. 다음 수업 본문은 미리보기 준비 전이에요.</p><a class="small-link" href="#learning">전체 과정에서 위치 확인 →</a></div></div></article></div></div></div>
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="bg-slate-900 border-t border-slate-800 text-slate-300 py-12 transition-colors">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div class="space-y-3">
+          <div class="flex items-center gap-2 text-white font-extrabold text-lg">
+            <span class="w-9 h-9 rounded-xl bg-gradient-to-br from-sky-500 to-indigo-600 inline-flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" class="w-8 h-8" role="img" aria-label="9sEngineer 로고"><text x="32" y="47" fill="#ffffff" font-family="Georgia,serif" font-size="44" font-weight="bold" text-anchor="middle">9</text><circle cx="51" cy="49" r="4" fill="#22d3ee"/></svg></span>
+            <span>9s<span class="text-sky-400">Engineer</span></span>
+          </div>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            열역학 기초부터 진공·냉동 시스템, CIP/SIP 자동 멸균, 공정 스케일업 및 현장 트러블슈팅까지 — 바이오·제약 동결건조 엔지니어를 위한 기술 아카이브입니다.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="text-xs font-semibold text-white uppercase tracking-wider mb-3">5대 공학 파트</h4>
+          <ul class="space-y-2 text-xs text-slate-400">
+            <li><a href="#categories" class="hover:text-white">공학 이론 &amp; 열역학</a></li>
+            <li><a href="#categories" class="hover:text-white">설비 구성 &amp; 기계계통</a></li>
+            <li><a href="#categories" class="hover:text-white">계측 제어 &amp; 모니터링</a></li>
+            <li><a href="#categories" class="hover:text-white">운전 &amp; 트러블슈팅</a></li>
+            <li><a href="#categories" class="hover:text-white">밸리데이션 &amp; GMP 규격</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-xs font-semibold text-white uppercase tracking-wider mb-3">공학 계산기 도구</h4>
+          <ul class="space-y-2 text-xs text-slate-400 font-mono">
+            <li><a href="#tools" onclick="switchCalcTab('leak-rate')" class="hover:text-white">진공 누설률 판정기</a></li>
+            <li><a href="#tools" onclick="switchCalcTab('vapor-pressure')" class="hover:text-white">얼음 증기압 계산기</a></li>
+            <li><a href="#tools" onclick="switchCalcTab('sublimation-rate')" class="hover:text-white">승화속도 모델러</a></li>
+            <li><a href="#tools" onclick="switchCalcTab('pressure-converter')" class="hover:text-white">압력 단위 변환기</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-xs font-semibold text-white uppercase tracking-wider mb-3">참조 국제 규격</h4>
+          <div class="space-y-2 text-[11px] text-slate-400 leading-relaxed">
+            <div class="p-2.5 rounded-lg bg-slate-800 border border-slate-700/60">
+              <strong class="text-slate-200">ISO 13408-3:</strong> 동결건조 무균 공정 &amp; 누설률(≤ 0.02 mbar·L/s)
+            </div>
+            <div class="p-2.5 rounded-lg bg-slate-800 border border-slate-700/60">
+              <strong class="text-slate-200">ASME BPE &amp; 21 CFR Part 11:</strong> 제약 위생 배관 및 데이터 완전성
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-8 pt-8 border-t border-slate-800 text-xs text-slate-500 text-center">
+        © 2026 9sEngineer. Managed by Freeze Drying Equipment Engineering Specialist. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== JAVASCRIPT APPLICATION CORE ==================== -->
+  <script>
+    /* ---------- 1. DATA REPOSITORY ---------- */
+    const CATEGORIES = [
+      {
+        slug: 'theory-thermodynamics',
+        name: '공학 이론 & 열역학',
+        nameEn: 'Thermodynamics & Transport Theory',
+        description: '물의 상태도, 삼중점, 승화 메커니즘, 유리전이(Tg\')/붕괴온도(Tc), 열 및 물질전달 수식 모델링',
+        icon: 'flame',
+        accentBg: 'bg-amber-500/10 border-amber-500/20 text-amber-600 dark:text-amber-300'
+      },
+      {
+        slug: 'equipment-mechanical',
+        name: '설비 구성 & 기계계통',
+        nameEn: 'Equipment & Mechanical Systems',
+        description: '동결건조기 챔버, 선반 열매체(실리콘오일) 순환, 캐스케이드 냉동기, 진공펌프, CIP/SIP 멸균 배관',
+        icon: 'cpu',
+        accentBg: 'bg-blue-500/10 border-blue-500/20 text-blue-600 dark:text-blue-300'
+      },
+      {
+        slug: 'instrumentation-control',
+        name: '계측 제어 & 모니터링',
+        nameEn: 'Instrumentation & Process Control',
+        description: '피라니 vs 바라트론 압력계, RTD/열전대 센서, MTM(압력상승시험), TDLAS, 공정 종점(End-point) 판별',
+        icon: 'activity',
+        accentBg: 'bg-purple-500/10 border-purple-500/20 text-purple-600 dark:text-purple-300'
+      },
+      {
+        slug: 'operation-troubleshooting',
+        name: '운전·유지보수 & 문제해결',
+        nameEn: 'Operation & Troubleshooting',
+        description: '진공 누설(Leak Rate), 선반 온도 편차, 케이크 붕괴/멜트백 불량 원인 분석, 헬륨 누설 탐지 및 PM 체크리스트',
+        icon: 'wrench',
+        accentBg: 'bg-emerald-500/10 border-emerald-500/20 text-emerald-600 dark:text-emerald-300'
+      },
+      {
+        slug: 'validation-compliance',
+        name: '밸리데이션 & GMP 규격',
+        nameEn: 'Validation & GMP Compliance',
+        description: '선반 열분포 매핑(Thermal Mapping), SIP 멸균 밸리데이션(F0 계산), IQ/OQ/PQ 프로토콜, Part 11 데이터 무결성',
+        icon: 'shield-check',
+        accentBg: 'bg-cyan-500/10 border-cyan-500/20 text-cyan-600 dark:text-cyan-300'
+      }
+    ];
+
+    const POSTS = [
+      {
+        slug: 'phase-diagram-and-triple-point',
+        title: '물의 상태도와 삼중점: 1차 건조에서 얼음이 액체로 녹지 않고 승화하는 열역학적 경계조건',
+        subtitle: 'Triple Point of Water & Sublimation Thermodynamics in Freeze Drying',
+        summary: '동결건조 공정의 근간이 되는 물의 상평형도, 삼중점(0.01℃, 6.11 mbar)의 물리적 의미와 클라우지우스-클라페이롱(Clausius-Clapeyron) 식을 통한 증기압 계산, 그리고 현장 엔지니어가 설정해야 하는 챔버 압력의 안전 마진을 다룹니다.',
+        category: 'theory-thermodynamics',
+        tags: ['상태도', '삼중점', '승화', '열역학', 'Clausius-Clapeyron', '1차 건조'],
+        readingTime: '9분',
+        publishedAt: '2026-10-15',
+        difficulty: '기초 (Basic)',
+        featured: true,
+        content: `
+### 1. 서론: 왜 물의 상태도를 이해해야 하는가?
+동결건조(Lyophilization)는 수용액 상태의 원료의약품을 **동결(Freezing)**시킨 뒤, 계의 압력을 낮추어 얼음을 액체 상태를 거치지 않고 직접 수증기로 **승화(Sublimation)**시켜 제거하는 공정입니다.
+만약 건조 도중 얼음이 녹아 액체가 되는 **'멜트백(Melt-back)'**이 발생하면 제품 케이크 기공이 붕괴되고 단백질 변성이 일어납니다.
+
+### 2. 물의 상평형도와 삼중점 (Triple Point)
+- **삼중점 (Triple Point of Water):**
+  - 온도: $T_{tp} = 0.01^\\circ\\text{C} = 273.16\\,\\text{K}$
+  - 압력: $P_{tp} = 6.1115\\,\\text{mbar} \\approx 4.58\\,\\text{Torr} \\approx 611.15\\,\\text{Pa}$
+챔버 내부의 전압 혹은 수증기 분압이 **$6.11\\,\\text{mbar}$ 미만**이어야만 얼음이 액체로 변하지 않고 100% 승화할 수 있습니다.
+
+### 3. 승화의 열역학: Clausius-Clapeyron 식
+얼음과 수증기가 평형을 이루는 승화 곡선은 다음 미분 방정식으로 기술됩니다:
+$$\\frac{dP_{ice}}{dT} = \\frac{\\Delta H_s}{T \\cdot \\Delta v}$$
+- $\\Delta H_s$: 얼음 승화 잠열 (약 $2,834\\,\\text{kJ/kg}$)
+- 제약 동결건조 표준 근사식:
+$$P_{ice}\\,(\\text{Torr}) = 2.693 \\times 10^{10} \\cdot \\exp\\left( -\\frac{6144.96}{T_K} \\right)$$
+
+### 4. 주요 온도별 얼음 포화 수증기압 데이터
+| 얼음 온도 ($T$) | 절대온도 ($T_K$) | 포화 증기압 ($P_{ice}$) | 환산 압력 (mTorr) | 승화 적합성 |
+|:---:|:---:|:---:|:---:|:---|
+| $0.01^\\circ\\text{C}$ (삼중점) | 273.16 K | $6.112\\,\\text{mbar}$ | $4,584\\,\\text{mTorr}$ | 임계 상한선 (운전 불가) |
+| $-10.0^\\circ\\text{C}$ | 263.15 K | $2.600\\,\\text{mbar}$ | $1,950\\,\\text{mTorr}$ | 고온 건조 (원료 벌크) |
+| $-20.0^\\circ\\text{C}$ | 253.15 K | $1.032\\,\\text{mbar}$ | $774\\,\\text{mTorr}$ | 일반 단백질 한계선 |
+| $-30.0^\\circ\\text{C}$ | 243.15 K | $0.380\\,\\text{mbar}$ | $285\\,\\text{mTorr}$ | 표준 1차 건조 목표대역 |
+| $-40.0^\\circ\\text{C}$ | 233.15 K | $0.128\\,\\text{mbar}$ | $96\\,\\text{mTorr}$ | 민감 비정질 제제 |
+        `
+      },
+      {
+        slug: 'amorphous-tg-crystalline-teu-collapse',
+        title: '비정질 의약품의 유리전이(Tg\')와 붕괴온도(Tc), 그리고 결정질 공융점(Teu) 완벽 분석',
+        subtitle: 'Glass Transition, Collapse Temperature & Eutectic Melting in Formulation Engineering',
+        summary: '비정질 수크로스/트레할로스의 Tg\' 및 Tc 메커니즘, 만니톨의 공융점 Teu, DSC 및 동결건조현미경(FDM) 분석법, 그리고 어닐링(Annealing) 열처리 사이클의 공학적 원리를 정리합니다.',
+        category: 'theory-thermodynamics',
+        tags: ['Tg\'', 'Tc', 'Teu', '비정질', '결정질', '어닐링'],
+        readingTime: '11분',
+        publishedAt: '2026-10-17',
+        difficulty: '중급 (Intermediate)',
+        featured: true,
+        content: `
+### 1. 결정질(Crystalline)과 비정질(Amorphous)의 차이
+- **결정질 물질 (Mannitol, Glycine):** 냉각 시 규칙적 결정 격자를 형성하며 명확한 **공융점($T_{eu}$)**을 가짐.
+- **비정질 물질 (Sucrose, Trehalose, mAbs):** 점도가 급상승하며 과냉각 액체 상태로 굳는 유리질 매트릭스 형성. **유리전이온도($T_g'$)**와 구조적 **붕괴온도($T_c$)**를 가짐.
+
+### 2. 붕괴온도 ($T_c$)의 법칙
+대부분의 비정질 제형에서 구조적 붕괴온도는 유리전이온도보다 $1 \\sim 3^\\circ\\text{C}$ 높게 관측됩니다:
+$$T_c \\approx T_g' + (1 \\sim 3^\\circ\\text{C})$$
+1차 건조 중 제품 온도가 $T_c$를 넘어가면 다공성 기공 구조가 무너져 케이크 저항($R_p$)이 수십 배 급증합니다.
+
+### 3. 어닐링(Annealing) 열처리의 공학적 효과
+만니톨 함유 처방에서 $-45^\\circ\\text{C}$ 급속 동결 후 $-20^\\circ\\text{C}$로 승온하여 2~4시간 등온 유지(Annealing)하면, 불안정한 비정질 만니톨이 안정한 $\\beta$형 결정으로 100% 전이되며 빙결정 크기가 커져 **1차 건조 시간을 최대 30~40% 단축**할 수 있습니다.
+        `
+      },
+      {
+        slug: 'silicone-oil-htf-shelf-uniformity',
+        title: '동결건조기 열매체(Silicone Oil) 순환 계통과 선반 온도 균일도(Shelf Uniformity) 공학',
+        subtitle: 'HTF Loop Engineering, Plate Heat Exchanger & Shelf Temperature Distribution',
+        summary: '선반 내부 실리콘 오일의 미로형 유로 설계, 순환 펌프(Magnetic Drive)와 팽창 탱크, 플레이트 열교환기 및 PID 3-Way 밸브 제어, GMP 기준 ±1.0℃ 선반 온도 균일도를 유지하기 위한 기계·배관 설계 핵심을 해설합니다.',
+        category: 'equipment-mechanical',
+        tags: ['실리콘오일', 'HTF', '선반온도', '열교환기', '순환펌프'],
+        readingTime: '10분',
+        publishedAt: '2026-10-18',
+        difficulty: '중급 (Intermediate)',
+        featured: true,
+        content: `
+### 1. 열매체(HTF)로서 실리콘 오일의 요구조건
+- 동점도(Kinematic Viscosity at 25℃): $5.0\\,\\text{cSt} \\sim 10.0\\,\\text{cSt}$ (저온 $-60^\\circ\\text{C}$에서도 $50\\,\\text{cSt}$ 이하 유지).
+- 응고점(Pour Point): $<-80^\\circ\\text{C}$, 인화점: $>135^\\circ\\text{C}$.
+
+### 2. 순환 루프 기계 구성
+1. **마그네틱 드라이브 캔드 펌프 (Canned / Mag-Drive Pump):** 메커니컬 씰이 없어 누설 없는 무누설 순환 실현.
+2. **질소 블랭킷 팽창 탱크 (N2 Blanket Expansion Tank):** 오일 산화 및 슬러지 생성을 방지하기 위해 $0.2 \\sim 0.5\\,\\text{bar}$ 질소 가압 유지.
+3. **선반 온도 균일도 규격:** GMP 적격성평가 기준 전체 선반 표면 편차 **$\\pm 1.0^\\circ\\text{C}$ 이내** 유지.
+        `
+      },
+      {
+        slug: 'pirani-vs-baratron-endpoint-detection',
+        title: '피라니 게이지(Pirani) vs 캐패시턴스 마노미터(Baratron) 측정 원리와 1차 건조 종점 판정',
+        subtitle: 'Thermal Conductivity vs Diaphragm Capacitance Manometer & Comparative Pressure',
+        summary: '피라니 열전도 압력계와 바라트론 정전용량식 압력계의 물리적 작동 원리 비교, 수증기 분압에 따른 피라니 과지시 현상, 두 게이지의 압력 수렴(Cross-over)을 이용한 1차 건조 종점 자동 검출 알고리즘을 분석합니다.',
+        category: 'instrumentation-control',
+        tags: ['피라니게이지', '바라트론', '1차건조종점', '압력계측'],
+        readingTime: '8분',
+        publishedAt: '2026-10-19',
+        difficulty: '중급 (Intermediate)',
+        featured: false,
+        content: `
+### 1. 두 진공 게이지의 측정 메커니즘
+- **바라트론 (Capacitance Manometer):** 금속 다이어프램의 물리적 변위를 측정하여 가스 종류에 무관하게 실제 물리적 전압력($P_{total}$)을 정밀 측정.
+- **피라니 (Pirani Gauge):** 가열된 필라멘트로부터 기체 분자로의 열전도도를 측정. 수증기는 질소보다 열전도도가 약 1.6배 높아 실제 압력보다 약 60% 높게 과지시(Over-reading)함.
+
+### 2. 압력 수렴법 (Comparative Pressure Measurement)
+1차 건조 진행 중 얼음 승화로 수증기가 발생할 때는 피라니 압력이 바라트론 압력보다 크게 높지만, 얼음 승화가 완료되면 피라니 압력이 급강하하여 바라트론 압력과 일치(Cross-over)하게 됩니다:
+$$\\Delta P(t) = P_{Pirani}(t) - P_{Baratron}(t) \\le 0.005\\,\\text{mbar} \\quad (\\text{안정화 지속})$$
+이 수렴 조건을 감지하여 PLC가 자동으로 2차 건조 승온을 시작합니다.
+        `
+      },
+      {
+        slug: 'vacuum-leak-rate-and-helium-detection',
+        title: '챔버 진공 누설률(Leak Rate) 시험 절차와 헬륨 질량분석기 탐지 실무',
+        subtitle: 'Vacuum Chamber Tightness, Pressure Rise Test & Helium Mass Spectrometry',
+        summary: 'ISO 13408-3 및 GAMP 가이드라인에 따른 동결건조기 진공 누설률 계산 공식, 압력상승시험 절차, 가상 누설(탈가스)과 실제 외부 누설 구별법, 헬륨 디텍터 누설점 정밀 추적 실무를 다룹니다.',
+        category: 'operation-troubleshooting',
+        tags: ['누설률', 'LeakRate', '진공시험', '헬륨디텍터'],
+        readingTime: '12분',
+        publishedAt: '2026-10-20',
+        difficulty: '고급 (Advanced)',
+        featured: false,
+        content: `
+### 1. 누설률 계산 수식과 허용 규격
+$$Q = \\frac{V \\cdot \\Delta P}{\\Delta t}$$
+- **ISO 13408-3 표준 규격:** $Q \\le 0.020\\,\\text{mbar}\\cdot\\text{L}/\\text{s}$
+- 고도 무균 격리 공정 권장 기준: $Q \\le 0.010\\,\\text{mbar}\\cdot\\text{L}/\\text{s}$
+
+### 2. 가상 누설(탈가스) vs 실제 누설 판별
+- **실제 누설 (Real Leak):** $\\frac{dP}{dt} = \\text{Constant}$ (기울기가 직선적 지속 상승). 외부 개스킷 찢김, 밸브 시트 불량.
+- **가상 누설 (Outgassing):** 초반 급상승 후 시간이 지나며 포화 평형에 수렴(Plateau). 내부 수분 및 유기 휘발물 방출.
+
+### 3. 헬륨 누설 탐지 노하우
+헬륨 가스는 공기보다 가벼워 위로 상승하므로, 스프레이 프로브 탐지 시 **설비의 최하단 배관 플랜지부터 시작하여 상단으로 올라가야** 오검출을 방지할 수 있습니다.
+        `
+      },
+      {
+        slug: 'sip-validation-f0-heat-penetration',
+        title: '동결건조기 SIP(Steam-in-Place) 멸균 밸리데이션과 F0 열침투 적분 계산',
+        subtitle: 'Pure Steam Sterilization, Cold-Spot Mapping & Lethality Accumulation',
+        summary: '순수증기(Pure Steam) 도입 계통, 공기 제거 진공 펄싱 사이클, 최냉점(Cold Spot) 선정 기준, F0 치 열침투 적분 수식 계산 및 생물학적 지표(BI) 사멸 적격성평가 실무를 완벽 정리합니다.',
+        category: 'validation-compliance',
+        tags: ['SIP', '스팀멸균', 'F0계산', 'ColdSpot', '밸리데이션'],
+        readingTime: '11분',
+        publishedAt: '2026-10-22',
+        difficulty: '고급 (Advanced)',
+        featured: false,
+        content: `
+### 1. F0 치(물리적 치사율 적분) 수식
+$$F_0 = \\int_{0}^{t} 10^{\\frac{T(t) - 121.1}{z}} dt = \\sum_{i=1}^{n} 10^{\\frac{T_i - 121.1}{10}} \\cdot \\Delta t$$
+- 기준 온도: $121.1^\\circ\\text{C}$, $z = 10.0^\\circ\\text{C}$ (*G. stearothermophilus* 포자 기준).
+- 과잉 살균(Overkill) 기준: **최저 $F_0 \\ge 15\\,\\text{분}$ 이상** 달성.
+
+### 2. 동결건조기 대표 최냉점 (Cold Spot)
+1. 콘덴서 챔버 최하단 드레인 밸브 전단 배관.
+2. 진공 메인 격리 밸브 하부 바디.
+3. 챔버 메인 도어 가스켓 하단 코너 홈.
+        `
+      }
+    ];
+
+    const PID_COMPONENTS = {
+      'chamber': {
+        name: '동결건조 챔버 (Drying Chamber)',
+        category: '기계 / 압력용기',
+        summary: '바이알이 적재되는 고진공·고압(-1.0 ~ +2.5 bar) 압력용기. SUS316L 전해연마(Ra ≤ 0.4 μm) 표면 처리.',
+        keySpecs: ['재질: SUS316L', '설계압력: -1.0 ~ +2.5 bar(g)', '선반 평탄도: ≤ 0.5 mm/m', '유압 스토퍼링 벨로우즈 장착'],
+        tips: '선반 수평도 정기 검사 및 유압 실린더 벨로우즈 헬륨 누설 탐지 필수.'
+      },
+      'isolation-valve': {
+        name: '메인 격리 밸브 (Main Isolation Valve)',
+        category: '진공 / 분리 밸브',
+        summary: '챔버와 콘덴서 사이에 위치한 대구경(DN300~DN800) 고진공 밸브로 1초 미만 초고속 폐쇄를 통해 MTM(압력상승시험) 수행.',
+        keySpecs: ['구동: 공압 액추에이터', '차단속도: < 1.0초', '씰링: 무균 EPDM/PTFE', '차압: 전후단 1 bar 기밀 유지'],
+        tips: '밸브 시트 씰링 마모 점검 및 액추에이터 에어 누설 확인.'
+      },
+      'condenser': {
+        name: '응축기 / 콜드트랩 (Ice Condenser Trap)',
+        category: '냉각 / 승화 수증기 포집',
+        summary: '승화 수증기를 -75℃ ~ -85℃ 극저온 코일 표면에 얼음으로 즉각 결빙 포집하여 진공 펌프 보호.',
+        keySpecs: ['코일 온도: ≤ -80℃', '포집 용량: 50 ~ 500 kg+ 수증기', '제상: 스팀/온수 제상 링'],
+        tips: '제상 후 하부 드레인 잔류 수분 완전 배출 확인 및 냉매 압력 감시.'
+      },
+      'shelves-htf': {
+        name: '선반 열매체 순환계 (Silicone Oil HTF Loop)',
+        category: '열전달 / 온도제어',
+        summary: '저점도(5 cSt) 실리콘 오일을 순환시켜 선반 온도를 -60℃ ~ +80℃까지 ±1.0℃ 이내로 정밀 PID 제어.',
+        keySpecs: ['열매체: PDMS 5 cSt', '펌프: Mag-Drive Canned Pump', '제어: 3-Way 밸브 + 판형 열교환기(PHE)'],
+        tips: '팽창 탱크 질소 압력(0.3 bar) 확인 및 오일 수분도(< 50 ppm) 주기적 분석.'
+      },
+      'dual-gauges': {
+        name: '이중 압력 계측계 (Pirani & Baratron)',
+        category: '계측 / 공정 제어',
+        summary: '전압력 센서인 바라트론과 가스 열전도도 센서인 피라니를 병렬 운전하여 1차 건조 종점을 정밀 검출.',
+        keySpecs: ['Baratron: 정전용량식 0.001 ~ 1.0 mbar', 'Pirani: 가열 백금선 열전도 게이지', '종점 판정: 두 압력값 일치 수렴'],
+        tips: '바라트론 정기 영점 교정 및 SIP 스팀 유입 방지 차단 밸브 연동 확인.'
+      },
+      'vacuum-system': {
+        name: '진공 펌핑 시스템 (Roots + Dry Screw)',
+        category: '진공 / 배기 계통',
+        summary: '루츠 부스터 펌프와 건식 스크류 펌프 조합으로 챔버를 0.02 mbar 대역까지 고속 배기 및 압력 제어.',
+        keySpecs: ['루츠 블로워 + 드라이 스크류 펌프', '도달 진공도: ≤ 1 x 10^-3 mbar', '미세 질소(N2) 블리드 밸브 연동'],
+        tips: '드라이 펌프 질소 퍼지 유량 감시 및 배기 라인 필터 차압 점검.'
+      },
+      'cip-sip': {
+        name: '자동 세척 및 정치 멸균 계통 (CIP/SIP)',
+        category: '위생 / 무균 밸리데이션',
+        summary: '순수증기(121.5℃)와 진공 펄싱 사이클로 챔버 전 영역을 분해 없이 100% 완전 멸균(F0 ≥ 15분).',
+        keySpecs: ['순수증기: 2.2 bar(g), 121℃ ~ 123℃', '공기 제거: 진공 펄싱 3~4회', '회전 스프레이 노즐'],
+        tips: '최냉점(드레인 밸브) 스팀 트랩 작동 점검 및 에어 필터 무결성 시험.'
+      }
+    };
+
+    /* ---------- 2. ROUTING & VIEW CONTROLLER ---------- */
+    function navigateTo(hash) {
+      if (!hash) hash = '#home';
+      const cleanHash = hash.split('?')[0].split('/')[0];
+      
+      document.querySelectorAll('.view-panel').forEach(el => el.classList.add('hidden'));
+
+      if (cleanHash === '#home' || cleanHash === '') {
+        document.getElementById('view-home').classList.remove('hidden');
+      } else if (cleanHash === '#posts') {
+        document.getElementById('view-posts').classList.remove('hidden');
+      } else if (cleanHash.startsWith('#post-')) {
+        const slug = cleanHash.replace('#post-', '');
+        renderPostDetail(slug);
+        document.getElementById('view-post-detail').classList.remove('hidden');
+      } else if (cleanHash === '#categories') {
+        document.getElementById('view-categories').classList.remove('hidden');
+      } else if (cleanHash === '#tools') {
+        document.getElementById('view-tools').classList.remove('hidden');
+      } else if (cleanHash === '#diagram') {
+        document.getElementById('view-diagram').classList.remove('hidden');
+      } else if (cleanHash === '#about') {
+        document.getElementById('view-about').classList.remove('hidden');
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      lucide.createIcons();
+      renderMathInElement(document.body, {
+        delimiters: [
+          { left: '$$', right: '$$', display: true },
+          { left: '$', right: '$', display: false }
+        ],
+        throwOnError: false
+      });
+    }
+
+    window.addEventListener('hashchange', () => navigateTo(window.location.hash));
+
+    /* ---------- 3. RENDERERS ---------- */
+    function renderHome() {
+      // 5 Disciplines Cards
+      const catContainer = document.getElementById('home-categories-grid');
+      catContainer.innerHTML = CATEGORIES.map(cat => {
+        const count = POSTS.filter(p => p.category === cat.slug).length;
+        return `
+          <div onclick="filterPostsByCategory('${cat.slug}')" class="group p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 hover:border-sky-500/50 cursor-pointer shadow-sm hover:shadow-lg transition-all flex flex-col justify-between">
+            <div>
+              <div class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center mb-3 text-sky-500 group-hover:scale-110 transition-transform">
+                <i data-lucide="${cat.icon}" class="w-5 h-5"></i>
+              </div>
+              <h3 class="font-bold text-base text-slate-900 dark:text-white group-hover:text-sky-500 transition-colors">${cat.name}</h3>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 line-clamp-2 leading-relaxed">${cat.description}</p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex justify-between text-xs text-slate-400">
+              <span>${count}편의 기술문서</span>
+              <span class="text-sky-500 font-bold">→</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Featured Posts
+      const featuredContainer = document.getElementById('home-featured-posts');
+      const featured = POSTS.filter(p => p.featured);
+      featuredContainer.innerHTML = featured.map(post => createPostCardHtml(post)).join('');
+    }
+
+    function createPostCardHtml(post) {
+      const cat = CATEGORIES.find(c => c.slug === post.category);
+      return `
+        <article class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 hover:border-sky-500/50 hover:shadow-xl transition-all flex flex-col justify-between group">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <span class="text-xs font-semibold px-2.5 py-1 rounded-lg border ${cat.accentBg}">
+                ${cat.name}
+              </span>
+              <span class="text-[11px] font-mono text-slate-400">
+                ${post.difficulty}
+              </span>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-sky-500 transition-colors line-clamp-2">
+              <a href="#post-${post.slug}">${post.title}</a>
+            </h3>
+            <p class="text-xs font-mono text-slate-400 mt-1 line-clamp-1">${post.subtitle}</p>
+            <p class="text-sm text-slate-600 dark:text-slate-300 mt-3 line-clamp-3 leading-relaxed">${post.summary}</p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs text-slate-400">
+            <span>⏱️ ${post.readingTime}</span>
+            <a href="#post-${post.slug}" class="font-semibold text-sky-500 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+              본문 읽기 →
+            </a>
+          </div>
+        </article>
+      `;
+    }
+
+    function renderAllPosts(categoryFilter = 'ALL', searchQuery = '') {
+      const filtered = POSTS.filter(post => {
+        if (categoryFilter !== 'ALL' && post.category !== categoryFilter) return false;
+        if (searchQuery.trim() !== '') {
+          const q = searchQuery.toLowerCase();
+          return post.title.toLowerCase().includes(q) || post.summary.toLowerCase().includes(q) || post.tags.some(t => t.toLowerCase().includes(q));
+        }
+        return true;
+      });
+
+      const container = document.getElementById('all-posts-grid');
+      if (filtered.length === 0) {
+        container.innerHTML = `<div class="col-span-3 text-center py-16 text-slate-400">검색된 기술 아티클이 없습니다.</div>`;
+      } else {
+        container.innerHTML = filtered.map(p => createPostCardHtml(p)).join('');
+      }
+      lucide.createIcons();
+    }
+
+    function renderPostDetail(slug) {
+      const post = POSTS.find(p => p.slug === slug);
+      if (!post) return;
+      const cat = CATEGORIES.find(c => c.slug === post.category);
+      
+      const container = document.getElementById('post-detail-content');
+      container.innerHTML = `
+        <div class="space-y-6">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-semibold px-3 py-1 rounded-lg border ${cat.accentBg}">${cat.name}</span>
+            <span class="text-xs font-mono text-slate-400">${post.difficulty} • ⏱️ ${post.readingTime} 읽기</span>
+          </div>
+          <h1 class="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">${post.title}</h1>
+          <p class="text-base font-mono text-sky-500">${post.subtitle}</p>
+          <div class="p-4 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+            <strong>💡 엔지니어 핵심 요약:</strong> ${post.summary}
+          </div>
+          <div class="prose dark:prose-invert max-w-none text-slate-700 dark:text-slate-300 leading-relaxed space-y-4 pt-4 border-t border-slate-200 dark:border-slate-800">
+            ${formatMarkdown(post.content)}
+          </div>
+        </div>
+      `;
+    }
+
+    function formatMarkdown(text) {
+      // Basic markdown to HTML
+      let html = text
+        .replace(/^### (.*$)/gim, '<h3 class="text-xl font-bold mt-6 mb-2 text-slate-900 dark:text-white">$1</h3>')
+        .replace(/^## (.*$)/gim, '<h2 class="text-2xl font-bold mt-8 mb-3 text-slate-900 dark:text-white border-b pb-2 border-slate-200 dark:border-slate-800">$1</h2>')
+        .replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-slate-900 dark:text-white">$1</strong>')
+        .replace(/^- (.*$)/gim, '<li class="ml-4 list-disc">$1</li>');
+
+      // Table formatting
+      const tableRegex = /\|(.+)\|[\r\n]+\|([-:|\s]+)\|[\r\n]+((?:\|.+[\|\r\n]+)+)/g;
+      html = html.replace(tableRegex, (match, header, sep, body) => {
+        const headers = header.split('|').map(h => h.trim()).filter(Boolean);
+        const rows = body.trim().split('\n').map(r => r.split('|').map(c => c.trim()).filter(Boolean));
+        let table = '<div class="my-4 overflow-x-auto"><table class="w-full text-left text-xs border-collapse border border-slate-300 dark:border-slate-700">';
+        table += '<thead class="bg-slate-100 dark:bg-slate-800"><tr>' + headers.map(h => `<th class="p-2 border border-slate-300 dark:border-slate-700 font-bold">${h}</th>`).join('') + '</tr></thead><tbody>';
+        rows.forEach(row => {
+          table += '<tr>' + row.map(c => `<td class="p-2 border border-slate-300 dark:border-slate-700">${c}</td>`).join('') + '</tr>';
+        });
+        table += '</tbody></table></div>';
+        return table;
+      });
+
+      return html;
+    }
+
+    function filterPostsByCategory(slug) {
+      window.location.hash = '#posts';
+      setTimeout(() => {
+        renderAllPosts(slug);
+        document.querySelectorAll('.cat-pill').forEach(btn => {
+          if (btn.getAttribute('data-slug') === slug) {
+            btn.className = 'cat-pill px-3 py-1.5 rounded-lg text-xs font-semibold bg-sky-500 text-white';
+          } else {
+            btn.className = 'cat-pill px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300';
+          }
+        });
+      }, 50);
+    }
+
+    /* ---------- 4. CALCULATOR ENGINES ---------- */
+    function switchCalcTab(tabId) {
+      document.querySelectorAll('.calc-tab-btn').forEach(btn => {
+        if (btn.getAttribute('data-tab') === tabId) {
+          btn.className = 'calc-tab-btn px-4 py-2 rounded-xl text-xs font-bold transition-all bg-sky-500 text-white';
+        } else {
+          btn.className = 'calc-tab-btn px-4 py-2 rounded-xl text-xs font-bold transition-all bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300';
+        }
+      });
+      document.querySelectorAll('.calc-tab-pane').forEach(el => el.classList.add('hidden'));
+      document.getElementById(`tool-${tabId}`).classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    // Leak Rate Calculator
+    let currentLrLimit = 0.02;
+    function setLrVol(v) { document.getElementById('lr-vol').value = v; runLeakRateCalc(); }
+    function setLrLimit(l) {
+      currentLrLimit = l;
+      document.getElementById('lr-limit-002').className = l === 0.02 ? 'p-3 rounded-xl border border-sky-500 bg-sky-50 dark:bg-sky-950/40 text-left text-sky-700 dark:text-sky-300' : 'p-3 rounded-xl border border-slate-200 dark:border-slate-800 text-left text-slate-600 dark:text-slate-400';
+      document.getElementById('lr-limit-001').className = l === 0.01 ? 'p-3 rounded-xl border border-sky-500 bg-sky-50 dark:bg-sky-950/40 text-left text-sky-700 dark:text-sky-300' : 'p-3 rounded-xl border border-slate-200 dark:border-slate-800 text-left text-slate-600 dark:text-slate-400';
+      runLeakRateCalc();
+    }
+    function runLeakRateCalc() {
+      const vol = parseFloat(document.getElementById('lr-vol').value) || 0;
+      const dp = parseFloat(document.getElementById('lr-dp').value) || 0;
+      const timeMin = parseFloat(document.getElementById('lr-time').value) || 1;
+      const sec = timeMin * 60;
+
+      const qMbar = (vol * dp) / sec;
+      const qTorr = qMbar * 0.750062;
+      const ratio = (qMbar / currentLrLimit) * 100;
+
+      document.getElementById('lr-val-mbar').innerText = `${qMbar.toFixed(5)} mbar·L/s`;
+      document.getElementById('lr-val-torr').innerText = `${qTorr.toFixed(5)} Torr·L/s`;
+      document.getElementById('lr-limit-info').innerText = `허용치: ≤ ${currentLrLimit} mbar·L/s`;
+      document.getElementById('lr-ratio-text').innerText = `기준 대비 ${ratio.toFixed(1)}%`;
+
+      const box = document.getElementById('lr-result-box');
+      const icon = document.getElementById('lr-icon');
+      const title = document.getElementById('lr-status-title');
+      const exp = document.getElementById('lr-explanation');
+
+      if (qMbar <= currentLrLimit * 0.7) {
+        box.className = 'p-7 rounded-3xl border shadow-lg bg-emerald-50/70 dark:bg-emerald-950/40 border-emerald-500/50 text-emerald-900 dark:text-emerald-100 space-y-4';
+        icon.innerText = '✅';
+        title.innerText = '적합 (PASS - 합격)';
+        exp.innerText = `기준치(${currentLrLimit} mbar·L/s)의 ${ratio.toFixed(1)}% 수준으로 매우 안정적인 고기밀 상태입니다. 무균 제조공정 적합.`;
+      } else if (qMbar <= currentLrLimit) {
+        box.className = 'p-7 rounded-3xl border shadow-lg bg-amber-50/70 dark:bg-amber-950/40 border-amber-500/50 text-amber-900 dark:text-amber-100 space-y-4';
+        icon.innerText = '⚠️';
+        title.innerText = '경계 주의 (WARNING)';
+        exp.innerText = `기준치를 만족하나 ${ratio.toFixed(1)}%로 한계값에 근접합니다. 도어 가스켓 및 게이지 피팅부 점검을 권장합니다.`;
+      } else {
+        box.className = 'p-7 rounded-3xl border shadow-lg bg-red-50/70 dark:bg-red-950/40 border-red-500/50 text-red-900 dark:text-red-100 space-y-4';
+        icon.innerText = '❌';
+        title.innerText = '부적합 (FAIL - 누설 발생)';
+        exp.innerText = `기준치를 초과(${ratio.toFixed(1)}%)하여 외부 공기 누설 또는 탈가스가 발생 중입니다. 헬륨 디텍터 탐지가 필요합니다.`;
+      }
+    }
+
+    // Vapor Pressure Calculator
+    function syncVpTemp(val) {
+      document.getElementById('vp-temp-range').value = val;
+      document.getElementById('vp-temp-num').value = val;
+      document.getElementById('vp-temp-disp').innerText = `${val} °C`;
+
+      const tempK = parseFloat(val) + 273.15;
+      const lnPa = 24.3186 - (6138.61 / tempK);
+      const pa = Math.exp(lnPa);
+      const mbar = pa / 100;
+      const mTorr = (pa / 133.322368) * 1000;
+
+      document.getElementById('vp-res-mbar').innerText = mbar.toFixed(4);
+      document.getElementById('vp-res-mtorr').innerText = mTorr.toFixed(1);
+    }
+    function runInverseTempCalc() {
+      const pMbar = parseFloat(document.getElementById('vp-press-input').value) || 0.1;
+      document.getElementById('vp-press-disp').innerText = `${pMbar} mbar`;
+      const pa = pMbar * 100;
+      const lnPa = Math.log(pa);
+      const tempK = 6138.61 / (24.3186 - lnPa);
+      const tempC = tempK - 273.15;
+      document.getElementById('vp-inv-temp').innerText = `${tempC.toFixed(1)} °C`;
+    }
+
+    // Sublimation Rate Modeler
+    let currentVialArea = 3.8;
+    function setSubVial(area) {
+      currentVialArea = area;
+      runSublimationModel();
+    }
+    function runSublimationModel() {
+      const shelfT = parseFloat(document.getElementById('sub-shelf-temp').value) || -10;
+      const pc = parseFloat(document.getElementById('sub-pc-range').value) || 0.10;
+      document.getElementById('sub-shelf-disp').innerText = `${shelfT} °C`;
+      document.getElementById('sub-pc-disp').innerText = `${pc.toFixed(2)} mbar`;
+
+      // Kv model
+      const kv = 12 + (180 * pc) / (1 + 4 * pc);
+      // Product temp estimate
+      const tProd = shelfT - 10;
+      const deltaT = Math.max(0.5, shelfT - tProd);
+      const areaM2 = currentVialArea * 1e-4;
+      const heatWatts = kv * areaM2 * deltaT;
+      const rateGPerHour = (heatWatts / 2834) * 3600;
+
+      document.getElementById('sub-res-rate').innerText = `${rateGPerHour.toFixed(3)} g/hr`;
+      document.getElementById('sub-res-kv').innerText = `${kv.toFixed(1)} W/m²·K`;
+    }
+
+    // Pressure Converter
+    function runPressureConverter() {
+      const val = parseFloat(document.getElementById('pc-val').value) || 0;
+      const unit = document.getElementById('pc-unit').value;
+      let pa = 0;
+      if (unit === 'Pa') pa = val;
+      else if (unit === 'mbar') pa = val * 100;
+      else if (unit === 'Torr') pa = val * 133.322368;
+      else if (unit === 'mTorr') pa = (val / 1000) * 133.322368;
+      else if (unit === 'psi') pa = val * 6894.757;
+
+      document.getElementById('pc-out-mbar').innerText = (pa / 100).toFixed(4);
+      document.getElementById('pc-out-mtorr').innerText = ((pa / 133.322368) * 1000).toFixed(2);
+      document.getElementById('pc-out-pa').innerText = pa.toFixed(3);
+      document.getElementById('pc-out-torr').innerText = (pa / 133.322368).toFixed(4);
+      document.getElementById('pc-out-psi').innerText = (pa / 6894.757).toFixed(5);
+      document.getElementById('pc-out-atm').innerText = (pa / 101325).toFixed(6);
+    }
+
+    /* ---------- 5. P&ID INTERACTION ---------- */
+    function selectPidComp(compId) {
+      document.querySelectorAll('[id^="pid-node-"]').forEach(el => {
+        el.classList.remove('border-sky-500', 'bg-sky-950/40', 'shadow-lg');
+        el.classList.add('border-slate-700', 'bg-slate-900');
+      });
+      const activeNode = document.getElementById(`pid-node-${compId}`);
+      if (activeNode) {
+        activeNode.classList.remove('border-slate-700', 'bg-slate-900');
+        activeNode.classList.add('border-sky-500', 'bg-sky-950/40', 'shadow-lg');
+      }
+
+      const info = PID_COMPONENTS[compId];
+      if (!info) return;
+
+      const panel = document.getElementById('pid-detail-panel');
+      panel.innerHTML = `
+        <div class="flex justify-between items-start border-b border-slate-200 dark:border-slate-800 pb-3">
+          <div>
+            <span class="text-xs font-mono font-bold text-sky-500">${info.category}</span>
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white">${info.name}</h3>
+          </div>
+        </div>
+        <p class="text-sm text-slate-600 dark:text-slate-300">${info.summary}</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+          <div class="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+            <strong class="text-xs text-slate-900 dark:text-white block mb-1">설계 및 엔지니어링 사양:</strong>
+            <ul class="text-xs space-y-1 text-slate-500">${info.keySpecs.map(s => `<li>• ${s}</li>`).join('')}</ul>
+          </div>
+          <div class="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+            <strong class="text-xs text-amber-500 block mb-1">현장 유지보수(PM) 포인트:</strong>
+            <p class="text-xs text-slate-500">${info.tips}</p>
+          </div>
+        </div>
+      `;
+    }
+
+    /* ---------- 6. INITIALIZATION ---------- */
+    window.addEventListener('DOMContentLoaded', () => {
+      // Theme toggle setup
+      const themeBtn = document.getElementById('theme-toggle');
+      themeBtn.addEventListener('click', () => {
+        document.documentElement.classList.toggle('dark');
+        lucide.createIcons();
+      });
+
+      // Mobile Menu
+      document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+        document.getElementById('mobile-menu').classList.toggle('hidden');
+      });
+
+      // Filter pills setup
+      const pillsContainer = document.getElementById('category-filter-pills');
+      pillsContainer.innerHTML = `
+        <button onclick="renderAllPosts('ALL')" data-slug="ALL" class="cat-pill px-3 py-1.5 rounded-lg text-xs font-semibold bg-sky-500 text-white">전체</button>
+        ${CATEGORIES.map(c => `
+          <button onclick="renderAllPosts('${c.slug}')" data-slug="${c.slug}" class="cat-pill px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">${c.name}</button>
+        `).join('')}
+      `;
+
+      // Search input setup
+      document.getElementById('posts-search').addEventListener('input', (e) => {
+        renderAllPosts('ALL', e.target.value);
+      });
+
+      // Categories Map Page Full Renderer
+      document.getElementById('categories-full-list').innerHTML = CATEGORIES.map(cat => {
+        const catPosts = POSTS.filter(p => p.category === cat.slug);
+        return `
+          <div class="p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 space-y-4">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-sky-500">
+                <i data-lucide="${cat.icon}" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h2 class="text-xl font-bold text-slate-900 dark:text-white">${cat.name}</h2>
+                <p class="text-xs text-slate-400 font-mono">${cat.nameEn}</p>
+              </div>
+            </div>
+            <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">${cat.description}</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-slate-100 dark:border-slate-800">
+              ${catPosts.map(p => createPostCardHtml(p)).join('')}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Run Initial Components
+      renderHome();
+      renderAllPosts();
+      runLeakRateCalc();
+      syncVpTemp(-25);
+      runInverseTempCalc();
+      runSublimationModel();
+      runPressureConverter();
+      selectPidComp('chamber');
+
+      // Navigate
+      navigateTo(window.location.hash);
+    });
+  </script>
+<script>const originalDesignNavigate=navigateTo;navigateTo=function(hash){if(hash&&hash.startsWith('#s-')){document.querySelector(hash)?.scrollIntoView({behavior:'smooth'});return;}if(hash==='#learning'||hash==='#lesson-conrad'){document.querySelectorAll('.view-panel').forEach(e=>e.classList.add('hidden'));document.getElementById(hash==='#learning'?'view-learning':'view-lesson-conrad').classList.remove('hidden');window.scrollTo({top:0,behavior:'instant'});lucide.createIcons();return;}originalDesignNavigate(hash);};document.addEventListener('click',event=>{const a=event.target.closest('a[href^="#"]');if(a&&location.protocol==='data:'){event.preventDefault();navigateTo(a.getAttribute('href'));}});/* 후속 보완: 모호한 설명, 현장 용어, 실제 설비 명칭 대조. 현재 내용은 v2 유지. */</script>
+</body>
+</html>
